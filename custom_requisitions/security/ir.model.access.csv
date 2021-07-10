@@ -1,0 +1,8 @@
+id,name,model_id/id,group_id/id,perm_read,perm_write,perm_create,perm_unlink
+req_model_id,req.model,model_req_model,,1,1,1,1
+req_model_line_id,req.model.lines,model_req_model_lines,,1,1,1,1
+req_labores_lines_id,req.labores.lines,model_req_labores_lines,,1,1,1,1
+req_subcontrataciones_lines_id,req.subcontrataciones.lines,model_req_subcontrataciones_lines,,1,1,1,1
+req_canalizaciones_lines_id,req.canalizaciones.lines,model_req_canalizaciones_lines,,1,1,1,1
+req_cableado_lines_id,req.cableado.lines,model_req_cableado_lines,,1,1,1,1
+req_accesoriado_lines_id,req.accesoriado.lines,model_req_accesoriado_lines,,1,1,1,1

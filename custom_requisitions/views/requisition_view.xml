@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<act_window id="action_open_requisitions" name="Requisitions" res_model="req.model" view_type="form" view_mode="tree,form" />
+	<record id="Job_Costing_Form_inherit" model="ir.ui.view">
+		<field name="name">Job.Costing.Form.inherit</field>
+		<field name="model">job.costing</field>
+		<field name="inherit_id" ref="odoo_job_costing_management.job_costing_form_view" />
+		<field name="arch" type="xml">
+			<xpath expr="//header" position="inside">
+				<button string="Importaciones" name="action_open_import_wizard_job" type="object"/>
+			</xpath>
+			<xpath expr="//button[@name='action_view_vendor_bill_line']" position="after">
+				<button name="action_show_requisitions" class="oe_stat_button" type="object" icon="fa-gavel" string="Requisitions" attrs="{'invisible':[('state','=','draft')]}" />
+			</xpath>
+			<xpath expr="//field[@name='partner_id']" position="after">
+				<field name="Responsible"/>
+			</xpath>
+			<xpath expr="//field[@name='so_number']" position="after">
+				<field name="torres_departamento"/>
+				<field name="niveles" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/>
+				<field name="rango" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/>
+			</xpath>			
+			<xpath expr="//field[@name='job_labour_line_ids']/tree/field[@name='cost_price']" position="after">
+				<field name="dcto" force_save="1"/>			
+			 </xpath>
+			<xpath expr="//field[@name='job_overhead_line_ids']/tree/field[@name='cost_price']" position="after">
+				<field name="dcto" force_save="1"/>			
+			 </xpath>	
+			<xpath expr="//field[@name='overhead_total']" position="after">
+				<field name="labour_discount" force_save="1"/>			
+				<field name="subc_discount" force_save="1"/>			
+			 </xpath>				 		 
+		</field>
+	</record>
+	<record id="req_form_view" model="ir.ui.view">
+		<field name="name">req.model.view.tree</field>
+		<field name="model">req.model</field>
+		<field name="arch" type="xml">
+			<form string="Requisitions">
+			<header>
+				<button name="validar" string="Validar" type="object"  groups="base.group_erp_manager" />
+				<button name="cancelar" string="Cancelar Requisición" type="object"/>
+				<button name="devolver" string="Devolver" type="object"/>
+				<button name="action_open_import_wizard" string="Importaciones" type="object"/>
+			</header>
+            <sheet>
+                <group  colspan="4" col="4" >
+                    <field name="p_order2"  attrs="{'readonly':[('state','=','draft')]}" options="{'no_create': True, 'no_create_edit':True}"/>
+                    <field name="employee_id" />
+                    <field name="date" />
+                    <field name="Responsible" />
+					<field name="torres_departamento" readonly="1"/>
+					<field name="state" invisible="1" />
+                </group>
+				<notebook>
+					<page string="Canalización" widget="one2many_list" attrs="{'invisible':[('torres_departamento', '!=', True)]}">
+						<field name="req_canalizaciones_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="1">
+								<field name="products"/>
+								<field name="description" />
+								<field name="available_qty"/>
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />							
+							</tree>
+						</field>
+					</page>			
+					<page string="Cableado" widget="one2many_list" attrs="{'invisible':[('torres_departamento', '!=', True)]}">
+						<field name="req_cableado_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="1">
+								<field name="products" />
+								<field name="description" />
+								<field name="available_qty"/>
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />							
+							</tree>
+						</field>
+					</page>		
+					<page string="Accesoriado" widget="one2many_list" attrs="{'invisible':[('torres_departamento', '!=', True)]}">
+						<field name="req_accesoriado_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="1" >
+								<field name="products" />
+								<field name="description" />
+								<field name="available_qty"/>
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />							
+							</tree>
+						</field>
+					</page>		
+					<!-- <page string="Tableros y Equipos" widget="one2many_list" attrs="{'invisible':[('torres_departamento', '!=', True)]}">
+						<field name="req_lines_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="0">
+							</tree>
+						</field>
+					</page>			
+					<page string="Alimentador a departamento" widget="one2many_list" attrs="{'invisible':[('torres_departamento', '!=', True)]}">
+						<field name="req_lines_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="0">
+							</tree>
+						</field>
+					</page>																								 -->
+					<page string="Materiales" widget="one2many_list">
+						<field name="req_lines_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="0">
+								<field name="products" />
+								<field name="description" />
+								<field name="available_qty"/>
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />
+								<!-- <field name="req_id"/> -->
+							</tree>
+						</field>
+					</page>
+					<page string="Labores" widget="one2many_list">
+						<field name="req_labores_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="0">
+								<field name="products" />
+								<field name="description" />
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />
+							<!-- 	<field name="changed"/> -->
+
+								<!-- <field name="req_id"/> -->
+							</tree>
+						</field>
+					</page>
+					<page string="Subcontrataciones" widget="one2many_list">
+						<field name="req_subcontrataciones_ids" mode="tree" widget="one2many_list" nolabel="1">
+							<tree editable="bottom" create="0">
+								<field name="products" />
+								<field name="description" />
+								<field name="qty" />
+								<field name="req_date" />
+								<field name="acumulacion" />
+								<!-- <field name="changed"/> -->
+
+								<!-- <field name="req_id"/> -->
+							</tree>
+						</field>
+					</page>                         
+				</notebook>
+                 </sheet>   
+			</form>
+		</field>
+	</record>
+	<record id="req_tree_view" model="ir.ui.view">
+		<field name="name">req.model.tree</field>
+		<field name="model">req.model</field>
+		<field name="arch" type="xml">
+			<tree string="Requisiciones">
+				<field name="p_order" />
+				<field name="employee_id" />
+				<field name="date" />
+			</tree>
+		</field>
+	</record>
+    <record model="ir.actions.act_window" id="odoo_job_costing_management.action_job_costing">
+        <field name="name">Job Cost Sheets</field>
+        <field name="res_model">job.costing</field>
+        <field name="domain">['|', ('Responsible','=',uid), ("admin_user", "=", uid)]</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>
+<!-- domain="[('product_brand_id', '=', active_id)]" -->
+

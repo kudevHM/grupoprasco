@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <!-- Categorias -->
+        <record id="cat_1" model="material.categoria">
+            <field name="name">Canalización</field>
+        </record>
+        <record id="cat_2" model="material.categoria">
+            <field name="name">Cableado</field>
+        </record>
+        <record id="cat_3" model="material.categoria">
+            <field name="name">Accesoriado</field>
+        </record>      
+        <!-- Subcategorias de Canalización -->
+        <record id="subcat_1" model="material.subcategoria">
+            <field name="name">Iluminación en losa</field>
+            <field name="cat_id" ref="cat_1"/>
+        </record>
+        <record id="subcat_2" model="material.subcategoria">
+            <field name="name">Contactos en Losa</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>
+        <record id="subcat_3" model="material.subcategoria">
+            <field name="name">Voz y datos en losa</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record> 
+        <record id="subcat_4" model="material.subcategoria">
+            <field name="name">AA en losa</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>                            
+        <record id="subcat_5" model="material.subcategoria">
+            <field name="name">Bajadas en muros y bajo firmes</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>      
+        <record id="subcat_6" model="material.subcategoria">
+            <field name="name">Alumbrado</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>       
+        <record id="subcat_7" model="material.subcategoria">
+            <field name="name">Contacto</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>          
+        <record id="subcat_8" model="material.subcategoria">
+            <field name="name">Voz y Datos</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>  
+        <record id="subcat_9" model="material.subcategoria">
+            <field name="name">AA</field>
+             <field name="cat_id" ref="cat_1"/>
+        </record>    
+        <!-- Subcategorias de Cableado -->         
+        <record id="subcat_10" model="material.subcategoria">
+            <field name="name">Cableado Alumnbrado</field>
+            <field name="cat_id" ref="cat_2"/>
+        </record>
+        <record id="subcat_11" model="material.subcategoria">
+            <field name="name">Cableado Contactos</field>
+             <field name="cat_id" ref="cat_2"/>
+        </record>
+        <record id="subcat_12" model="material.subcategoria">
+            <field name="name">Guiado voz datos</field>
+             <field name="cat_id" ref="cat_2"/>
+        </record> 
+        <record id="subcat_13" model="material.subcategoria">
+            <field name="name">Guiados AA</field>
+             <field name="cat_id" ref="cat_2"/>
+        </record>                            
+        <!-- Subcategorias de Accesoriado -->         
+        <record id="subcat_14" model="material.subcategoria">
+            <field name="name">Accesoriado Alumbrado</field>
+            <field name="cat_id" ref="cat_3"/>
+        </record>
+        <record id="subcat_15" model="material.subcategoria">
+            <field name="name">Accesoriado contacto</field>
+             <field name="cat_id" ref="cat_3"/>
+        </record>
+        <record id="subcat_16" model="material.subcategoria">
+            <field name="name">Accesoriado voz y datos</field>
+             <field name="cat_id" ref="cat_3"/>
+        </record> 
+        <record id="subcat_17" model="material.subcategoria">
+            <field name="name">Pasillo nivel 1</field>
+             <field name="cat_id" ref="cat_3"/>
+        </record>            
+        <record id="subcat_18" model="material.subcategoria">
+            <field name="name">Alimentadores nivel 1</field>
+             <field name="cat_id" ref="cat_3"/>
+        </record>                                                
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<record id="inherit_partner_id_inherit_module_name" model="ir.ui.view">
+    <field name="name">res.partner.view.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='l10n_pe_district_id']" position="attributes">
+            <attribute name="required">0</attribute>
+        </xpath>
+        <xpath expr="//field[@name='l10n_pe_district_id']" position="after">
+            <field name="district_mex"  string="Distritos" placeholder="Distrito"/>
+        </xpath>        
+        <xpath expr="//field[@name='l10n_pe_district_id']" position="attributes">
+            <attribute name="invisible" >1</attribute>
+        </xpath>
+    </field>
+</record>
+</odoo>

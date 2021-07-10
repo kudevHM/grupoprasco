@@ -1,0 +1,907 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <data noupdate="1">
+        <record id="prod_1" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE BOTE INTEGRAL DE 12CMØ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_1"/>            
+        </record>
+        <record id="prod_2" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_1"/>              
+        </record>
+        <record id="prod_3" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_1"/>            
+        </record>
+        <record id="prod_4" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_1"/>          
+        </record>
+        <record id="prod_5" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_2"/>           
+        </record>
+        <record id="prod_6" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_2"/>             
+        </record>
+        <record id="prod_7" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_2"/>                 
+        </record>
+        <record id="prod_8" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_3"/>               
+        </record>
+        <record id="prod_9" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_3"/>            
+        </record>
+        <record id="prod_10" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_3"/>               
+        </record>
+        <record id="prod_11" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_4"/>             
+        </record>
+        <record id="prod_12" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_4"/>                
+        </record>
+        <record id="prod_13" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_4"/>              
+        </record>
+        <record id="prod_14" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CAJA CUADRADA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_15" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE CAJA CUADRADA CON TAPA REALZADA DE 3/4 DE PVC PESADO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_16" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA REALZADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_17" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA CUADRADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_18" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE ANCLA FULMINANTE DE COLOR ROJO MARCA HILTI DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_19" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE SOPORTE EN MURO PARA TABLAROCA PARA SUJECION</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_20" model="product.template">
+            <field name="name">SUMINTRO Y COLOCACION DE SOPORTE PARA TUBERIA A BASE DE 1 METRO DE UNICANAL DE 4X4, DOS TAQUETES EXPANSIVOS DE 1/4, 4 RONDANAS DE 1/4 Y 2 TUERCAS DE 1/4, 1 METRO DE VARILLA ROSCADA DE 1/4 Y 2 PZAS DE COPLE HEXAGONAL DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_21" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_22" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_23" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+        <record id="prod_24" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_6"/>            
+        </record>
+
+
+        <record id="prod_25" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CAJA CUADRADA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_26" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA REALZADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_27" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA CUADRADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_28" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE CAJA CUADRADA CON TAPA REALZADA DE 3/4 DE PVC PESADO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_29" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE CAJA CUADRADA CON TAPA CUADRADA DE 3/4 DE PVC PESADO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_30" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE ANCLA FULMINANTE DE COLOR ROJO MARCA HILTI DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_31" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE SOPORTE EN MURO PARA TABLAROCA PARA SUJECION</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_32" model="product.template">
+            <field name="name">SUMINTRO Y COLOCACION DE SOPORTE PARA TUBERIA A BASE DE 1 METRO DE UNICANAL DE 4X4, DOS TAQUETES EXPANSIVOS DE 1/4, 4 RONDANAS DE 1/4 Y 2 TUERCAS DE 1/4, 1 METRO DE VARILLA ROSCADA DE 1/4 Y 2 PZAS DE COPLE HEXAGONAL DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_33" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_34" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_35" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+        <record id="prod_36" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_7"/>            
+        </record>
+
+
+
+
+
+
+        <record id="prod_37" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CAJA CUADRADA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_38" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA REALZADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_39" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA CUADRADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_40" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE ANCLA FULMINANTE DE COLOR ROJO MARCA HILTI DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_41" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE SOPORTE EN MURO PARA TABLAROCA PARA SUJECION</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_42" model="product.template">
+            <field name="name">SUMINTRO Y COLOCACION DE SOPORTE PARA TUBERIA A BASE DE 1 METRO DE UNICANAL DE 4X4, DOS TAQUETES EXPANSIVOS DE 1/4, 4 RONDANAS DE 1/4 Y 2 TUERCAS DE 1/4, 1 METRO DE VARILLA ROSCADA DE 1/4 Y 2 PZAS DE COPLE HEXAGONAL DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_43" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_44" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_45" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_46" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+        <record id="prod_47" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_8"/>            
+        </record>
+
+
+        <record id="prod_48" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CAJA CUADRADA DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_49" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA REALZADA SENCILLA PVC DE 25 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_50" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA CUADRADA SENCILLA PVC DE 25 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_51" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_52" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_53" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+        <record id="prod_54" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 25MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_1"/>            
+            <field name="subcat_id" ref="subcat_9"/>            
+        </record>
+
+
+        <record id="prod_55" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CAPUCHÓN ROJO PSATICO AMARILLO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>            
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+        <record id="prod_56" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CAPUCHÓN ROJO PSATICO ROJO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>
+            <field name="responsible_id">2</field>           
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+        <record id="prod_57" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE ARMOFLEX CALIBRE 3X12 AWG</field>
+            <field name="type">product</field>
+            <field name="categ_id">1</field> 
+            <field name="responsible_id">2</field>               
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+        <record id="prod_58" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR NEGRO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>    
+            <field name="responsible_id">2</field>            
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+        <record id="prod_59" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR BLANCO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>    
+            <field name="responsible_id">2</field>            
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+        <record id="prod_60" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR DESNUDO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>     
+            <field name="responsible_id">2</field>           
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_10"/>            
+        </record>
+
+
+
+        <record id="prod_61" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CAPUCHÓN ROJO PSATICO AMARILLO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>          
+            <field name="responsible_id">2</field>      
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+        <record id="prod_62" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CAPUCHÓN ROJO PSATICO ROJO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>         
+            <field name="responsible_id">2</field>    
+            <field name="responsible_id">2</field>       
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+        <record id="prod_63" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE ARMOFLEX CALIBRE 3X12 AWG</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+        <record id="prod_64" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR NEGRO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+        <record id="prod_65" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR BLANCO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+        <record id="prod_66" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACIÓN DE CABLE THW CAL 12 AWG COLOR DESNUDO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_11"/>            
+        </record>
+
+
+
+
+        <record id="prod_67" model="product.template">
+            <field name="name">SYC DE GUIADO DE TUBERIAS POR MEDIO DE RAFIA</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_12"/>            
+        </record>
+        <record id="prod_68" model="product.template">
+            <field name="name">SYC DE GUIADO DE TUBERIAS POR MEDIO DE RAFIA</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_2"/>            
+            <field name="subcat_id" ref="subcat_13"/>            
+        </record>
+
+
+        <record id="prod_69" model="product.template">
+            <field name="name">COLOCACION DE APAGADOR SENCILLO MODELO N1101-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_70" model="product.template">
+            <field name="name">COLOCACION DE APAGADOR TIPO ESCALERA, MODELO N1102-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_71" model="product.template">
+            <field name="name">COLOCACION DE PLACA Y CHASIS DE 1 MODULO. MODELO N1371-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_72" model="product.template">
+            <field name="name">COLOCACION DE PLACA Y CHASIS DE 2 MODULOS, MODELO N1372-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_73" model="product.template">
+            <field name="name">COLOCACION DE PLACA Y CHASIS DE 3 MODULOS, MODELO N1373-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_74" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN TECHO, MODELO 19186-0-WW, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_75" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN TECHO, MODELO 19187-0-WW, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_76" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN TECHO, MODELO 19186-0-CW, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_77" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN MURO, MODELO V22154W/35, MARCA CALUX.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_78" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN EXTERIOR, MODELO 05-7493-04, MARCA ASTROLED.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_79" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN PATIO, MODELO 5192, MARCA CALUX.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_80" model="product.template">
+            <field name="name">COLOCACION DE LUMINARIA INSTALADO EN BAÑO, MODELO 66-3407-01, MARCA ASTROLED.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_81" model="product.template">
+            <field name="name">COLOCACION DE EXTRACTOR PARA BAÑO 18W, MODELO SILENT 200, LINEA HABITAT, MARCA SOLER y PALAU</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_82" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 1 POLO, 1X15 AMP, MODELO BTN1/15, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_83" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 1 POLO, 1X20 AMP, MODELO BTN1/20, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_84" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 2 POLOS, 2X20 AMP, MODELO BTN2/20, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_85" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 2 POLOS, 2X30 AMP, MODELO BTN2/30, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+        <record id="prod_86" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE  INTERRUPTOR DE SEGURIDAD DE 2 POLOS, 2X25 AMP</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_14"/>            
+        </record>
+
+
+
+        <record id="prod_87" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE CENTRO DE CARGA PARA EMPOTRAR CON ZAPATAS PRINCIPALES DE  125A, 3F-4H, 120/220V, DE 12 POLOS, MODELO BTN41L12E, MARCA BTICINO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_88" model="product.template">
+            <field name="name">COLOCACION DE CONTACTO DUPLEX CON PLACA Y CHASIS, MODELO N1325-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_89" model="product.template">
+            <field name="name">COLOCACION DE CONTACTO DUPLEX GFCI CON PLACA Y CHASIS, MODELO N1329-BL, LINEA UNNO, MARCA ESTEVEZ.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_90" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 1 POLO, 1X15 AMP, MODELO BTN1/15, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_91" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 1 POLO, 1X20 AMP, MODELO BTN1/20, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_92" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 2 POLOS, 2X20 AMP, MODELO BTN2/20, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_93" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE INTERRUPTOR TERMOMAGNETICO BTPLUG DE 2 POLOS, 2X30 AMP, MODELO BTN2/30, MARCA BTICINO.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+        <record id="prod_94" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE  INTERRUPTOR DE SEGURIDAD DE 2 POLOS, 2X25 AMP</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_15"/>            
+        </record>
+
+
+        <record id="prod_95" model="product.template">
+            <field name="name">COLOCACION DE ACCESORIO PARA SALIDA DE TELEFONÍA</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_16"/>            
+        </record>
+        <record id="prod_96" model="product.template">
+            <field name="name">COLOCACION DE ACCESORIO PARA SALIDA DE INTERNET</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_16"/>            
+        </record>
+        <record id="prod_97" model="product.template">
+            <field name="name">COLOCACION DE ACCESORIO PARA SALIDA DE MÓDEM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_16"/>            
+        </record>
+        <record id="prod_98" model="product.template">
+            <field name="name">COLOCACION DE ACCESORIO PARA SALIDA DE TV</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_16"/>            
+        </record>
+
+
+
+        <record id="prod_99" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CAJA CUADRADA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_100" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE CAJA CUADRADA CON TAPA REALZADA DE 3/4 DE PVC PESADO</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_101" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA REALZADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_102" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TAPA CUADRADA SENCILLA PVC DE 21 MM.</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_103" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE ANCLA FULMINANTE DE COLOR ROJO MARCA HILTI DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_104" model="product.template">
+            <field name="name">SUMINISTRO E INSTALACION DE SOPORTE EN MURO PARA TABLAROCA PARA SUJECION</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_105" model="product.template">
+            <field name="name">SUMINTRO Y COLOCACION DE SOPORTE PARA TUBERIA A BASE DE 1 METRO DE UNICANAL DE 4X4, DOS TAQUETES EXPANSIVOS DE 1/4, 4 RONDANAS DE 1/4 Y 2 TUERCAS DE 1/4, 1 METRO DE VARILLA ROSCADA DE 1/4 Y 2 PZAS DE COPLE HEXAGONAL DE 1/4".</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_106" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE SOPORTERIA PARA TUBERIA DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_107" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE TUBERIA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_108" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CONECTOR DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+        <record id="prod_109" model="product.template">
+            <field name="name">SUMINISTRO Y COLOCACION DE CURVA DE PVC TIPO PESADO DE 21MM</field>
+            <field name="type">product</field>            
+            <field name="categ_id">1</field>            
+            <field name="responsible_id">2</field>    
+            <field name="cat_id" ref="cat_3"/>            
+            <field name="subcat_id" ref="subcat_17"/>            
+        </record>
+    </data>
+</odoo>

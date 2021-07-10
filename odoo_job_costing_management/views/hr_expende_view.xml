@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="hr_expense_form_view_job">
+            <field name="name">hr.expense.form.job</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='tax_ids']" position="after">
+                    <field name="doc_number" string="number ruc"/>
+                    <field name="partner_id" string="Customer" domain="[('customer','=',True), ('parent_id', '=', False)]" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='state']" position="replace">
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,post,payment_requested,done"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_expense_filter_job" model="ir.ui.view">
+            <field name="name">hr.expense.job</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_filter"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//filter[@name='approved']" position="after">
+                    <filter domain="[('state', '=', 'payment_requested')]" string="To Payment Requested" name="to_payment_requested"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_expense_kanban_job" model="ir.ui.view">
+            <field name="name">hr.expense.kanban.job</field>
+            <field name="model">hr.expense</field>
+            <field name="inherit_id" ref="hr_expense.hr_expense_kanban_view"/>
+             <field name="arch" type="xml">
+                 <xpath  expr="//templates//field[@name='state']" position="replace">
+                    <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'submit': 'default', 'cancel': 'danger', 'post': 'warning', 'payment_requested': 'danger', 'done': 'success'}}"/>
+                </xpath>
+             </field>
+        </record>
+
+        <record id="view_hr_expense_sheet_kanban_job" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.kanban.job</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_kanban"/>
+             <field name="arch" type="xml">
+                 <xpath  expr="//templates//field[@name='state']" position="replace">
+                    <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'submit': 'default', 'cancel': 'danger', 'post': 'warning', 'payment_requested': 'danger', 'done': 'success'}}"/>
+                </xpath>
+             </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_expense_sheet_form_view_job">
+            <field name="name">hr.expense.sheet.form.job</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+                        <button name="action_submit_sheet" states="draft" string="Submit to Approver User" type="object" class="oe_highlight o_expense_sheet_submit"/>
+                        <button name="approve_expense_sheets" states="submit" string="Approve" type="object" groups="hr_expense.group_hr_expense_manager" class="oe_highlight o_expense_sheet_approve"/>
+                        <button name="action_sheet_payment_requested" states="post" string="Request Payment" type="object"  class="oe_highlight o_expense_sheet_post"/>
+                        <button name="action_sheet_move_create" states="approve" string="Post Journal Entries" type="object" groups="account.group_account_manager" class="oe_highlight o_expense_sheet_post"/>
+                        <button name="%(hr_expense.hr_expense_sheet_register_payment_wizard_action)d" type="action" string="Register Payment" class="oe_highlight o_expense_sheet_pay" attrs="{'invisible': [('state', '!=', 'payment_requested')]}" context="{'default_amount': total_amount, 'partner_id': address_id}" groups="hr_expense.group_hr_expense_manager"/>
+                        <button name="reset_expense_sheets" string="Reset to Draft" type="object" attrs="{'invisible': ['|', ('can_reset', '=', False), ('state', 'not in', ['submit', 'cancel'])]}"/>
+                        <button name="%(hr_expense.hr_expense_refuse_wizard_action)d" states="submit,approve" context="{'hr_expense_refuse_model':'hr.expense.sheet'}" string="Refuse" type="action" groups="hr_expense.group_hr_expense_user" />
+                        <field name="state" widget="statusbar" statusbar_visible="draft,submit,approve,post,payment_requested,done"/>
+                    </header>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="before" required="True">
+                    <field name="approver_user_id"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <field name="user_id" string="user responsible for payment" attrs="{'required': [('state', '=', 'submit')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_expense_sheet_filter_job" model="ir.ui.view">
+            <field name="name">hr.expense.sheet.job</field>
+            <field name="model">hr.expense.sheet</field>
+            <field name="inherit_id" ref="hr_expense.view_hr_expense_sheet_filter"/>
+            <field name="arch" type="xml">
+                <xpath  expr="//filter[@name='to_post']" position="after">
+                    <filter domain="[('state', '=', 'payment_requested')]" string="To Payment Requested" name="to_payment_requested"/>
+                </xpath>
+                <xpath  expr="//filter[@name='approved']" position="replace">
+                    <filter domain="[('state', '=', 'payment_requested')]" string="To Pay" name="approved" help="Confirmed Expenses"/>
+                </xpath>
+            </field>
+        </record>
+        <!--
+        <record id="action_hr_expense_sheet_all_to_payment_requested" model="ir.actions.act_window">
+            <field name="name">Expense Reports Payment Requested</field>
+            <field name="res_model">hr.expense.sheet</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph</field>
+            <field name="search_view_id" ref="view_hr_expense_sheet_filter_job"/>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_to_payment_requested': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Create a new expense report
+              </p><p>
+                Once you have created your expense, submit it to your manager who will validate it.
+              </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_hr_expense_sheet_all_to_payment_requested" name="Payment Requested" sequence="3" parent="hr_expense.menu_hr_expense_report"
+            action="action_hr_expense_sheet_all_to_payment_requested" groups="account.group_account_user"/>
+        -->
+    </data>
+</odoo>

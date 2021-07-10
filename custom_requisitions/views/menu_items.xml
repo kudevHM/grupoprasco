@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Menu Categorias -->
+	<record id="material_cat_form_view_tree" model="ir.ui.view">
+		<field name="name">material.categoria.tree</field>
+		<field name="model">material.categoria</field>
+		<field name="arch" type="xml">
+			<tree string="Categorias">
+                    <field name="name"/>
+			</tree>
+		</field>
+	</record>
+	<record id="categorias_form_view" model="ir.ui.view">
+		<field name="name">material.categoria.form</field>
+		<field name="model">material.categoria</field>
+		<field name="arch" type="xml">
+			<form string="Categorias">
+                <sheet>
+                    <group  colspan="4" >
+                        <field name="name"/>
+                    </group>
+                </sheet>
+			</form>
+		</field>
+	</record>    
+    <!-- Menu subCategorias -->
+	<record id="material_subcat_form_view_tree" model="ir.ui.view">
+		<field name="name">material.subcategoria.tree</field>
+		<field name="model">material.subcategoria</field>
+		<field name="arch" type="xml">
+			<tree string="SubCategorias">
+                    <field name="name"/>
+                    <field name="cat_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="subcategorias_form_view" model="ir.ui.view">
+		<field name="name">material.subcategoria.form</field>
+		<field name="model">material.subcategoria</field>
+		<field name="arch" type="xml">
+			<form string="SubCategorias">
+                <sheet>
+                    <group  colspan="4" >
+                        <field name="name"/>
+                        <field name="cat_id"/>
+                    </group>
+                </sheet>
+			</form>
+		</field>
+	</record>     
+    <!-- Menu Sub Escalas -->
+	<!-- <record id="subscale_form_view_tree" model="ir.ui.view">
+		<field name="name">survey.subscale.tree</field>
+		<field name="model">survey.subscale</field>
+		<field name="arch" type="xml">
+			<tree string="Escalas">
+                    <field name="name"/>
+                    <field name="scale_id"/>
+			</tree>
+		</field>
+	</record>
+	<record id="subscale_form_view" model="ir.ui.view">
+		<field name="name">survey.subscale.form</field>
+		<field name="model">survey.subscale</field>
+		<field name="arch" type="xml">
+			<form string="Sub Escalas">
+                <sheet>
+                    <group  colspan="4" >
+                        <field name="name"/>
+                        <field name="scale_id"/>
+
+                    </group>
+                </sheet>            
+			</form>
+		</field>
+	</record>      -->
+
+    <!-- Acciones Categorias -->
+    <record id="action_categorias" model="ir.actions.act_window">
+        <field name="name">Categorias</field>
+        <field name="res_model">material.categoria</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="material_cat_form_view_tree"/>
+        <field name="target">main</field>
+    </record>
+    <!-- Acciones SubCategorias -->
+    <record id="action_subcategorias" model="ir.actions.act_window">
+        <field name="name">Subcategorias</field>
+        <field name="res_model">material.subcategoria</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="material_subcat_form_view_tree"/>
+        <field name="target">main</field>
+    </record>    
+    <!-- Acciones Sub-Escalas -->
+    <!-- <record id="action_subescalas" model="ir.actions.act_window">
+        <field name="name">SubEscalas</field>
+        <field name="res_model">survey.subscale</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="subscale_form_view_tree"/>
+        <field name="target">main</field>
+    </record> -->
+    <!-- Items Menus -->    
+    <menuitem id="Categoria_menu" name="Tipo de Categoria" parent="odoo_job_costing_management.menu_job_managmt" action="action_categorias"/>
+    <menuitem id="Subcategoria_menu" name="Tipo de SubCategoria" parent="odoo_job_costing_management.menu_job_managmt" action="action_subcategorias"/>
+    <!-- <menuitem id="Escala_principal_menu" name="Escalas" parent="Escalas_menu" action="action_escalas"/>
+    <menuitem id="Subescala_menu" name="SubEscalas" parent="Escalas_menu" action="action_subescalas"/> -->
+
+</odoo>
+

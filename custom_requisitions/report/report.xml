@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="paperformat_invoice" model="report.paperformat">
+
+            <field name="name">Reporte de requisiciones</field>
+            <field name="default" eval="True" />
+            <field name="format">A4</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">4</field>
+            <field name="margin_bottom">4</field>
+            <field name="margin_left">4</field>
+            <field name="margin_right">4</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+
+        </record>
+
+        <template id="external_layout_clean" inherit_id="web.external_layout_clean" primary="True">
+            <xpath expr="//div[@class='header']" position="replace"/>
+            <xpath expr="//div[@class='footer o_clean_footer']" position="replace"/>
+        </template>
+
+        <template id="report_invoice_document">
+            <t t-call="custom_requisitions.external_layout_clean">
+                <t t-set="o" t-value="o"/>
+                <div class="page container h-100" style="margin-top:0px;">
+                <div>
+                   <h1>Reporte de Requisiciones</h1>
+
+                </div>
+                   <div style="background-color:#dedede; margin-top:15px"></div>
+                            <div class="row">
+                                <div class="col-2"><h5>Proyecto:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.p_order"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Empleado: </h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.employee_id.name"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Responsable:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.Responsible.name"/></div>
+                            </div> 
+                            <div class="article mt-4 o_report_layout_standard">
+                                <table class="table table-condensed table-bordered">
+                                    <thead style="height:25px; width:100%; background-color:#dedede; color:#000; font-size:14px">
+                                        <th class="text-center" style="width: 50%">Producto</th>
+                                        <th class="text-center" style="width: 30%">Descripción</th>
+                                        <th class="text-center" style="width: 10%">Cantidad</th>
+                                        <th class="text-center" style="width: 15%">Fecha</th>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="o.req_lines_ids" t-as="doc">
+                                            <tr>
+                                                <td><span t-esc="doc.products.name"/></td>
+                                                <td class="text-center"><span t-esc="doc['description']"/></td>
+                                                <td class="text-center"><span t-esc="doc['acumulacion']"/></td>
+                                                <td class="text-center"><span t-esc="doc['req_date']"/></td>
+
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+<!--                          <table class="table table-sm" style="border: none" name="invoice_line_table">
+                            <thead style="height:25px; width:100%; background-color:#dedede; color:#000; font-size:14px">
+                                <tr>
+                                    <th style="width:25%">
+                                        <span>Producto</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Descripción</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Cantidad</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Fecha</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="min-height: 250px;">
+                                <tr t-foreach="o.req_lines_ids" t-as="l">
+                                    <td style="width:25%">
+                                        <span t-field="l.products.name"/>
+                                    </td>
+                                    <td style="width:25%">
+                                        <span t-field="l.description"/>
+                                    </td>
+                                    <td style="width:25%">
+                                        <span t-field="l.acumulacion"/>
+                                    </td>
+                                    <td style="width:25%">
+                                        <span t-field="l.req_date" style=""/>
+                                    </td>
+                                </tr>
+                            </tbody>                            
+                        </table> -->
+                </div> 
+            </t>
+        </template>
+        <template id="report_labores_document">
+            <t t-call="custom_requisitions.external_layout_clean">
+                <t t-set="o" t-value="o"/>
+                <div class="page container h-100" style="margin-top:0px;">
+                <div>
+                   <h1>Reporte de Requisiciones</h1>
+
+                </div>
+                   <div style="height:25px; background-color:#dedede; margin-top:15px"></div>
+                            <div class="row">
+                                <div class="col-2"><h5>Proyecto:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.p_order"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Empleado: </h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.employee_id.name"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Responsable:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.Responsible.name"/></div>
+                            </div> 
+
+                         <table class="table table-sm" style="border: none" name="invoice_line_table">
+                            <thead style="height:25px; width:100%; background-color:#dedede; color:#000; font-size:14px">
+                                <tr>
+                                    <th style="width:25%">
+                                        <span>Producto</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Descripción</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Cantidad</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Fecha</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="min-height: 250px;">
+                                <tr t-foreach="o.req_labores_ids" t-as="l">
+                                    <td>
+                                        <span t-field="l.products.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.description"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.acumulacion"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.req_date" style=""/>
+                                    </td>
+                                </tr>
+                            </tbody>                            
+                        </table>
+                </div> 
+            </t>
+        </template>           
+        <template id="report_subcontrataciones_document">
+            <t t-call="custom_requisitions.external_layout_clean">
+                <t t-set="o" t-value="o"/>
+                <div class="page container h-100" style="margin-top:0px;">
+                <div>
+                   <h1>Reporte de Requisiciones</h1>
+
+                </div>
+                   <div style="height:25px; background-color:#dedede; margin-top:15px"></div>
+                            <div class="row">
+                                <div class="col-2"><h5>Proyecto:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.p_order"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Empleado: </h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.employee_id.name"/></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-2"><h5>Responsable:</h5></div>
+                                <div class="col"><span style="color:#000" t-field="o.Responsible.name"/></div>
+                            </div> 
+
+                         <table class="table table-sm" style="border: none" name="invoice_line_table">
+                            <thead style="height:25px; width:100%; background-color:#dedede; color:#000; font-size:14px">
+                                <tr>
+                                    <th style="width:25%">
+                                        <span>Producto</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Descripción</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Cantidad</span>
+                                    </th>
+                                    <th style="width:25%">
+                                        <span>Fecha</span>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="invoice_tbody" style="min-height: 250px;">
+                                <tr t-foreach="o.req_subcontrataciones_ids" t-as="l">
+                                    <td>
+                                        <span t-field="l.products.name"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.description"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.acumulacion"/>
+                                    </td>
+                                    <td>
+                                        <span t-field="l.req_date" style=""/>
+                                    </td>
+                                </tr>
+                            </tbody>                            
+                        </table>
+                </div> 
+            </t>
+        </template>        
+
+        <report id="report_custom" string="Reporte de Materiales" model="req.model" report_type="qweb-pdf" name="custom_requisitions.report_invoice" paperformat="custom_requisitions.paperformat_invoice" attachment_use="True"/>
+        <report id="report_custom_labores" string="Reporte de Labores" model="req.model" report_type="qweb-pdf" name="custom_requisitions.report_labores" paperformat="custom_requisitions.paperformat_invoice" attachment_use="True"/>     
+        <report id="report_custom_subcontrataciones" string="Reporte de Subcontrataciones" model="req.model" report_type="qweb-pdf" name="custom_requisitions.report_subcontrataciones" paperformat="custom_requisitions.paperformat_invoice" attachment_use="True"/>
+
+        <template id="report_invoice">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_requisitions.report_invoice_document"/>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_labores">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_requisitions.report_labores_document"/>
+                </t>
+            </t>
+        </template>        
+
+        <template id="report_subcontrataciones">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="custom_requisitions.report_subcontrataciones_document"/>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

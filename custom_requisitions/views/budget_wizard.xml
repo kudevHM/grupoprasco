@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="budget_wizard">
+        <field name="name">Wizard to import job costing</field>
+        <field name="model">job.costing.wizard</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <span>En los siguientes campos agregar las plantillas de excel para importar la data:</span>
+                </group>
+                <group>
+                    <group>
+                        <field name="torres_departamento" readonly="1" invisible="1"/>
+                        <field name="material_data" /> 
+                        <field name="labores_data" /> 
+                        <field name="subcontrataciones_data" />                     
+                    </group>
+                    <!-- <group>
+                        <field name="canalizacion_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/> 
+                        <field name="cableado_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/> 
+                        <field name="accesoriado_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/>                 
+                    </group> -->
+                </group> 
+                <footer> 
+                    <button string="Cancel" special="cancel" class="oe_highlight"/>
+                    <button name="import_all" string="Importar Todo" type="object" class="oe_highlight" />                 
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
