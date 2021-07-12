@@ -91,23 +91,23 @@ class JobCostingInherit(models.Model):
         for item in self.job_cost_line_ids:
             req_line_ids =self.env["req.model.lines"].search([("linea_id","=", item.id)], limit=1)
             if req_line_ids:
-                req_line_ids.write({"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
-            else:
-                self.env["req.model.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":'',"qty": 0,"req_date" :item.date,"req_id": req_id.id})
+                req_line_ids.write({"products": item.product_id.id,"description":item.description,"available_qty":item.product_qty,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
+            # else:
+            #     self.env["req.model.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":'',"qty": 0,"req_date" :item.date,"req_id": req_id.id})
         #Busca Labores
         for item in self.job_labour_line_ids:
             req_labores_ids =self.env["req.labores.lines"].search([("linea_id","=", item.id)])
             if req_labores_ids:
                 req_labores_ids.write({"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
-            else:
-                self.env["req.labores.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
+            # else:
+            #     self.env["req.labores.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
         #Busca Subcontrataciones
         for item in self.job_overhead_line_ids:
             req_subcon_ids =self.env["req.subcontrataciones.lines"].search([("linea_id","=", item.id)])
             if req_subcon_ids:
                 req_subcon_ids.write({"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
-            else:
-                self.env["req.subcontrataciones.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})                                  
+            # else:
+            #     self.env["req.subcontrataciones.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})                                  
         
         return res
 
@@ -140,6 +140,7 @@ class JobCostingInherit(models.Model):
             vals["qty"]=0
             vals["req_date"]=item.date
             vals["req_id"]=id_req_model.id
+            vals["product_qty"]=item.product_qty
             _logger.info('OBJETO %s', vals)
 
             req_material.create(vals)
@@ -228,6 +229,9 @@ class JobCostingLineInherit(models.Model):
     @api.depends('product_qty','hours','cost_price','direct_id')
     def _compute_total_cost(self):
         for rec in self:
+            req_line_ids = rec.env["req.model.lines"].search([("linea_id","=", rec.id)], limit=1)
+            if req_line_ids:
+                req_line_ids.write({"available_qty":rec.product_qty})
             if rec.job_type == 'labour':
                 rec.product_qty = 0.0
                 rec.total_cost = rec.hours * (rec.cost_price - rec.dcto)

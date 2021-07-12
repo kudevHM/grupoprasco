@@ -9,6 +9,7 @@
 				<group>
 					<field name="name" force_save="1" />
 					<field name="project_id" force_save="1" />
+					<field name="project_name"/>
 				</group>
 				<group>
 					<field name="client_id" force_save="1" />

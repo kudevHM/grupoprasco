@@ -32,6 +32,7 @@
         'views/menu_items.xml',
       #  "views/product_views.xml",
         "views/requisition_view.xml",
+        "wizards/devolver.xml",
         "report/report.xml",
         "views/purchase_order.xml",
 

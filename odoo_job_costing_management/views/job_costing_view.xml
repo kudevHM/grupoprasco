@@ -70,7 +70,7 @@
                                     <field name="date"/>
                                     <field name="job_type" invisible="1"/>
                                     <field name="job_type_id" domain="[('job_type','=',job_type)]"/>
-                                    <field name="product_id" domain="[('type','=', 'product')]"/>
+                                    <field name="product_id" domain="[('type','in', ('consu','product'))]"/>
                                     <field name="description"/>
                                     <field name="reference"/>
                                     <field name="product_qty" sum="Total"/>

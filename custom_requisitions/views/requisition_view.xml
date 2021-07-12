@@ -40,7 +40,7 @@
 			<header>
 				<button name="validar" string="Validar" type="object"  groups="base.group_erp_manager" />
 				<button name="cancelar" string="Cancelar Requisición" type="object"/>
-				<button name="devolver" string="Devolver" type="object"/>
+				<!-- <button name="devolver" string="Devolver" type="object"/> -->
 				<button name="action_open_import_wizard" string="Importaciones" type="object"/>
 			</header>
             <sheet>
@@ -103,13 +103,14 @@
 					</page>																								 -->
 					<page string="Materiales" widget="one2many_list">
 						<field name="req_lines_ids" mode="tree" widget="one2many_list" nolabel="1">
-							<tree editable="bottom" create="0">
+							<tree editable="bottom" delete="0" create="0">
 								<field name="products" />
 								<field name="description" />
-								<field name="available_qty"/>
+								<field name="available_qty" readonly="1"/>
 								<field name="qty" />
 								<field name="req_date" />
-								<field name="acumulacion" />
+								<field name="acumulacion" readonly="1"/>
+								<button name="devolver" string="Devolver" type="object" icon="fa-rotate-left"/>
 								<!-- <field name="req_id"/> -->
 							</tree>
 						</field>

@@ -86,12 +86,12 @@ class ReqModel(models.Model):
             vals["product_id"] = item.products.id
             vals["name"] = item.description
             vals["product_qty"] = item.acumulacion
-            vals["price_unit"] = item.products.lst_price
+            vals["price_unit"] = item.linea_id.cost_price or 0 
             vals["product_uom"] = item.products.uom_id.id
             vals["date_planned"] = item.req_date
             vals["order_id"] = purchase_order_id.id
-            vals["price_after"] = item.products.lst_price
-            vals["req_model_line_id"] = item.id            
+            vals["price_after"] = item.linea_id.cost_price or 0
+            vals["req_model_line_id"] = item.id           
             if len(p_order_line) == 0:
                 self.env["purchase.order.line"].create(vals)
             else:
@@ -143,6 +143,18 @@ class ReqModel(models.Model):
             'target': 'current',
         }
 
+    def cancelar(self):
+        for item in self.req_lines_ids:
+            item.acumulacion=0
+            job_line_id = self.env["job.cost.line"].search(
+                [("id", "=", item.linea_id.id)])
+            
+            if job_line_id:
+                job_line_id.sudo().write({
+                    "product_qty": item.product_qty
+                })
+            
+    
     @api.multi
     def unlink(self):
         job_id = self.env["job.costing"].search(
@@ -278,6 +290,20 @@ class ReqModelLines(models.Model):
     acumulacion = fields.Integer(string='Cantidad retirada')
     p_order_line_id = fields.One2many(comodel_name='purchase.order.line', inverse_name='req_model_line_id', string='Purchase line')
     available_qty = fields.Integer(string='Cantidad Disponible')
+    product_qty = fields.Integer(string='Cantidad Planificada')
+
+    def devolver(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'context': {'default_accumulated_qty': self.acumulacion, 'default_req_id':self.id,'default_line_id':self.id},
+            'name': 'Devolucion',
+            'res_model': 'devolver.wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': self.env.ref('custom_requisitions.req_model_devolver_wizard').id,
+            'target': 'new',
+        }
+
 
 class ReqLaboresLines(models.Model):
     _name = "req.labores.lines"
