@@ -36,11 +36,11 @@ class BudgetWizard(models.TransientModel):
             else:
                 line = (map(lambda row:isinstance(row.value, str) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
                 arreglo = list(line)
-                producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[0],'utf-8'))], limit=1)
+                producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[1],'utf-8'))], limit=1)
                 if len(producto_tmpl) == 0:
-                    producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[0]))], limit=1)
+                    producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[1]))], limit=1)
                 if len(producto_tmpl) == 0:
-                    raise Warning(_("No se encontro el producto " + arreglo[0]))
+                    raise Warning(_("No se encontro el producto " + arreglo[1]))
                 producto = self.env['product.product'].search([('product_tmpl_id', '=', producto_tmpl.id)], limit=1)
                 tipo = ""
                 job_type_id= None
@@ -60,15 +60,16 @@ class BudgetWizard(models.TransientModel):
                   #  "acumulación":int(float(arreglo[5])),
                  #   "req_id":self.env.context.get('req_id')                 
                 #}
+                date = datetime(*xlrd.xldate_as_tuple(int(float(arreglo[0])), 0))
                 obj={
-                    "date":datetime.now(),
+                    "date":date,
                     "product_id":producto.id,
-                    "description":arreglo[1],
-                    "product_qty":int(float(arreglo[3])),
-                    "reference":arreglo[2],
+                    "description":arreglo[2],
+                    "product_qty":int(float(arreglo[4])),
+                    "reference":arreglo[3],
                     "uom_id":producto.uom_id.id,
-                    "list_price":arreglo[5],
-                    "cost_price": arreglo[6],
+                    "list_price":arreglo[6],
+                    "cost_price": arreglo[7],
                     "job_type":tipo,
                     "direct_id":self.env.context.get('req_id'),
                 }
