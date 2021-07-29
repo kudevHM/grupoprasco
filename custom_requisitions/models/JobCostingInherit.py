@@ -19,7 +19,25 @@ class JobCostingInherit(models.Model):
     torres_departamento = fields.Boolean(string='Torres de departamento')
     niveles = fields.Char(string='Niveles')
     rango = fields.Char(string='Rango de departamentos')
-    
+    job_canalizaciones_ids = fields.One2many(
+        'job.canalizaciones.lines',
+        'job_costing_id',
+        string='Direct Materials',
+        copy=False,
+    )
+    job_cableado_ids = fields.One2many(
+        'job.cableado.lines',
+        'job_costing_id',
+        string='Direct Materials',
+        copy=False,
+    )
+    job_accesorio_ids = fields.One2many(
+        'job.accesoriado.lines',
+        'job_costing_id',
+        string='Direct Materials',
+        copy=False,
+        
+    )
     @api.depends(
         'job_labour_line_ids',
         'job_labour_line_ids.hours',
@@ -56,32 +74,43 @@ class JobCostingInherit(models.Model):
         for rec in self:
             rec.subc_discount = sum([(p.dcto) for p in rec.job_overhead_line_ids])   
 
+    # @api.multi
+    # def action_show_requisitions(self):
+    #     self.ensure_one()
+    #     s_order = self.number
+    #     context = self._context
+    #     current_uid = context.get('uid')
+    #     _logger.info('current user ============%s',current_uid )
+    #     _logger.info('admin user============%s',self.admin_user)
+
+    #     return {
+    #         'name':_("Requisitions to Process"),
+    #         'view_mode':'tree,form',
+    #         #'view_id': False,
+    #         'view_type': 'form',
+    #         'res_model': 'req.model',
+    #         #'res_id': req_id,
+    #         'type': 'ir.actions.act_window',
+    #         #'nodestroy': True,
+    #         'target': 'main',
+    #         'clear_bredcrumb':True,
+    #         #'domain': '[]',
+    #         'context': {'default_p_order': s_order},
+    #         'flags': {'mode': 'edit'},
+    #         'domain':['|',('Responsible','=',current_uid), ("admin_user", "=",current_uid)]
+    #     }
     @api.multi
     def action_show_requisitions(self):
-        self.ensure_one()
-        s_order = self.number
-        context = self._context
-        current_uid = context.get('uid')
-        _logger.info('current user ============%s',current_uid )
-        _logger.info('admin user============%s',self.admin_user)
-
-        return {
-            'name':_("Requisitions to Process"),
-            'view_mode':'tree,form',
-            #'view_id': False,
-            'view_type': 'form',
-            'res_model': 'req.model',
-            #'res_id': req_id,
-            'type': 'ir.actions.act_window',
-            #'nodestroy': True,
-            'target': 'main',
-            'clear_bredcrumb':True,
-            #'domain': '[]',
-            'context': {'default_p_order': s_order},
-            'flags': {'mode': 'edit'},
-            'domain':['|',('Responsible','=',current_uid), ("admin_user", "=",current_uid)]
-        }
-
+        action = self.env.ref("custom_requisitions.action_open_requisitions").read()[0]
+        lines = self.mapped("req_id.req_lines_ids.req_id")
+        if len(lines) > 1:
+            action["domain"] = [("id", "in", lines.ids)]
+        elif lines:
+            action["views"] = [
+                (self.env.ref("custom_requisitions.req_form_view").id, "form")
+            ]
+            action["res_id"] = lines.id
+        return action
 
     @api.multi
     def write(self, values):
@@ -108,6 +137,22 @@ class JobCostingInherit(models.Model):
                 req_subcon_ids.write({"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
             # else:
             #     self.env["req.subcontrataciones.lines"].create({"linea_id":item.id,"products": item.product_id.id,"description":item.description,"qty": 0,"req_date" :item.date,"req_id": req_id.id})                                  
+        #buscar canalizacion
+        for item in self.job_canalizaciones_ids:
+            req_line_ids =self.env["req.canalizaciones.lines"].search([("linea_id","=", item.id)], limit=1)
+            print("###holq!!!!!!",req_line_ids)
+            if req_line_ids:
+                req_line_ids.write({"products": item.product_id.id,"description":item.description,"available_qty":item.product_qty,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
+        #buscar cableado
+        for item in self.job_cableado_ids:
+            req_line_ids =self.env["req.cableado.lines"].search([("linea_id","=", item.id)], limit=1)
+            if req_line_ids:
+                req_line_ids.write({"products": item.product_id.id,"description":item.description,"available_qty":item.product_qty,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
+        #buscar accesorio
+        for item in self.job_accesorio_ids:
+            req_line_ids =self.env["req.accesoriado.lines"].search([("linea_id","=", item.id)], limit=1)
+            if req_line_ids:
+                req_line_ids.write({"products": item.product_id.id,"description":item.description,"available_qty":item.product_qty,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
         
         return res
 
@@ -129,7 +174,10 @@ class JobCostingInherit(models.Model):
         req_labores = self.env['req.labores.lines']
         req_subcontrataciones = self.env['req.subcontrataciones.lines']
         req_material = self.env['req.model.lines']
-
+        req_canalizacion = self.env['req.canalizaciones.lines']
+        req_cable = self.env['req.cableado.lines']
+        req_accesorios = self.env['req.accesoriado.lines']
+        print("###",req_canalizacion)
         for item in self.job_cost_line_ids:
             job_id = item.id
             _logger.info('JOB_ID %s', job_id)
@@ -165,7 +213,41 @@ class JobCostingInherit(models.Model):
             vals["qty"]=0
             vals["req_date"]=item.date
             vals["req_id"]=id_req_model.id
-            req_subcontrataciones.create(vals)                        
+            req_subcontrataciones.create(vals)    
+        for item4 in self.job_canalizaciones_ids:
+            job_id = item4.id
+            print("###",job_id)
+            vals={}
+            vals["linea_id"]=item4.id
+            vals["products"]=item4.product_id.id
+            vals["description"]=item4.description
+            vals["qty"]=0
+            vals["available_qty"] = item4.product_qty
+            vals["req_date"]=item4.date
+            vals["req_id"]=id_req_model.id
+            req_canalizacion.create(vals)     
+        for item5 in self.job_cableado_ids:
+            job_id = item5.id
+            vals={}
+            vals["linea_id"]=job_id
+            vals["products"]=item5.product_id.id
+            vals["description"]=item5.description
+            vals["qty"]=0
+            vals["available_qty"] = item5.product_qty
+            vals["req_date"]=item5.date
+            vals["req_id"]=id_req_model.id
+            req_cable.create(vals) 
+        for item6 in self.job_accesorio_ids:
+            job_id = item6.id
+            vals={}
+            vals["linea_id"]=job_id
+            vals["products"]=item6.product_id.id
+            vals["description"]=item6.description
+            vals["qty"]=0
+            vals["available_qty"] = item6.product_qty
+            vals["req_date"]=item6.date
+            vals["req_id"]=id_req_model.id
+            req_accesorios.create(vals)                             
         for rec in self:
             rec.write({
                 'has_req' :True,
@@ -200,7 +282,15 @@ class JobCostingLineInherit(models.Model):
     req_linea_ids = fields.One2many(comodel_name='req.model.lines', inverse_name='linea_id', string='Req Line')
     req_labores_ids = fields.One2many(comodel_name='req.labores.lines', inverse_name='linea_id', string='lab Line')
     req_subcontrataciones_ids = fields.One2many(comodel_name='req.subcontrataciones.lines', inverse_name='linea_id', string='sub Line')
+    withdrawn_qty = fields.Float(string="Cantidad Retirada", compute="_compute_withdrawn_qty")
 
+
+
+    def _compute_withdrawn_qty(self):
+        for rec in self:
+            rec.withdrawn_qty = 0.0
+            for line in rec.req_linea_ids:
+                rec.withdrawn_qty = line.purchased_qty
 
     @api.onchange('cost_price')
     def onchange_listPrice(self):
@@ -257,4 +347,35 @@ class ResUserInherit(models.Model):
     _inherit = 'res.users'
 
     req_id = fields.One2many(comodel_name='req.model', inverse_name='Responsible', string='Requisition')
-    
+
+class JobCanalizacionLines(models.Model):
+    _name = "job.canalizaciones.lines"
+
+    req_linea_ids = fields.One2many('req.canalizaciones.lines','linea_id', string='Req Line')
+    description = fields.Char(string='Descripción')
+    date = fields.Date(string='Fecha ')
+    job_costing_id = fields.Many2one(comodel_name='job.costing', string='Job cost')
+    product_id = fields.Many2one(
+        'product.product', string='Product', required=True, domain=[('cat_id.name','=', 'Canalización')])
+    product_qty = fields.Integer(string='Cantidad Planificada')
+
+class JobCableadoLines(models.Model):
+    _name = "job.cableado.lines"
+    # req_linea_ids = fields.One2many(comodel_name='req.cableado.lines', inverse_name='linea_id', string='Req Line')
+    description = fields.Char(string='Descripción')
+    date = fields.Date(string='Fecha')
+    job_costing_id = fields.Many2one(comodel_name='job.costing', string='Job cost')
+    product_id = fields.Many2one('product.product', string='Product', required=True, domain=[('cat_id.name','=', 'Cableado')])
+    product_qty = fields.Integer(string='Cantidad Planificada')
+
+class JobAccesoriadoLines(models.Model):
+    _name = "job.accesoriado.lines"
+
+    # req_linea_ids = fields.One2many(comodel_name='req.accesoriado.lines', inverse_name='linea_id', string='Req Line')
+    description = fields.Char(string='Descripción')
+    date = fields.Date(string='Fecha')
+    job_costing_id = fields.Many2one(comodel_name='job.costing', string='Job cost')
+    product_id = fields.Many2one(
+        'product.product', string='Product', required=True, domain=[('cat_id.name','=', 'Accesoriado')])
+    product_qty = fields.Integer(string='Cantidad Planificada')    
+

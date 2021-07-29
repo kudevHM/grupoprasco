@@ -13,6 +13,9 @@ _logger = logging.getLogger(__name__)
 class ReqModel(models.Model):
     _name = "req.model"
     _rec_name = "p_order"
+
+
+    name = fields.Char(string="Nombre")
     admin_user = fields.Integer('Admin User', default=2)
     p_order = fields.Char(string='Proyecto', store=True)
     p_order2 = fields.Many2one('job.costing', string='Proyecto',
@@ -35,12 +38,35 @@ class ReqModel(models.Model):
     req_accesoriado_ids = fields.One2many(
         comodel_name='req.accesoriado.lines', inverse_name='req_id', string='Requisiciones')            
     torres_departamento = fields.Boolean(string='Torres de departamento')
-    state = fields.Selection([
-        ('new', 'Nuevo'),
-        ('draft', 'Borrador')],
-        default="new",
-        track_visibility='onchange',
+    state = fields.Selection([('draft', 'Borrador'),('valid', 'Validado'),('finished', 'Terminado'),('cancel', 'Cancelado')],default="draft")
+    
+    purchase_count = fields.Integer(
+        string="Purchases count", compute="_compute_purchase_count", readonly=True
     )
+    @api.depends("req_lines_ids")
+    def _compute_purchase_count(self):
+        self.purchase_count = len(self.mapped("req_lines_ids.purchase_lines.order_id"))
+
+
+    @api.model
+    def create(self, vals):
+        if vals.get('name', 'New') == 'New':
+            vals['name'] = self.env['ir.sequence'].next_by_code(
+                'req.model.sec') or 'New'
+        result = super(ReqModel, self).create(vals)
+        return result
+
+    def action_view_purchase_order(self):
+        action = self.env.ref("purchase.purchase_rfq").read()[0]
+        lines = self.mapped("req_lines_ids.purchase_lines.order_id")
+        if len(lines) > 1:
+            action["domain"] = [("id", "in", lines.ids)]
+        elif lines:
+            action["views"] = [
+                (self.env.ref("purchase.purchase_order_form").id, "form")
+            ]
+            action["res_id"] = lines.id
+        return action
 
     @api.multi
     def action_open_import_wizard(self):
@@ -57,6 +83,11 @@ class ReqModel(models.Model):
             'target': 'new',
         }
 
+    def validate_pr(self):
+        self.state= "valid"
+
+    def purchase_request_line_finished(self):
+        self.state= "finished"
     def validar(self):
         p_order_id = self.env['purchase.order'].search(
             [("req_id", "=", self.p_order2.number)])
@@ -141,6 +172,48 @@ class ReqModel(models.Model):
             'res_id': res.id if res else p_order_id.id,
             'type': 'ir.actions.act_window',
             'target': 'current',
+        }
+        
+    def purchase_request_line_make_purchase_order(self):
+
+        data = []
+        view = self.env.ref('custom_requisitions.requisition_purchase_wizard_form')
+        purchase_order = self.env['requisition.purchase.wizard'].create({
+            'supplier_id':self.employee_id.id,
+            'job_id':self.p_order2.id,
+            'rec_model':self.id,
+            'responsible':self.Responsible.id
+        })
+
+        for line in self.req_lines_ids:
+            vals = {}
+            vals['product_id'] = line.products.id
+            vals['wiz_id'] = purchase_order.id
+            vals['name'] = line.description
+            vals["price_unit"] = line.linea_id.cost_price or 0 
+            vals["price_after"] = line.linea_id.cost_price or 0
+            vals["product_uom_id"] = line.products.uom_id.id
+            vals["req_model_line_id"] = line.id
+            vals['date_planned'] = line.req_date
+            vals['available_qty'] = line.available_qty
+            
+            data.append(vals)
+        line = self.env['requisition.purchase.line.wizard'].create(data)
+        print("####",purchase_order)
+        # print("####",line.product_id.name)
+
+
+        return {
+            'type': 'ir.actions.act_window',
+            'name': 'Crear Orden de Compra',
+            'res_model': 'requisition.purchase.wizard',
+            'view_type': 'form',
+            'view_mode': 'form',
+            'views': [(view.id, 'form')],
+            'view_id': view.id,
+            'target': 'new',
+            'res_id': purchase_order.id,
+            'context': self.env.context,
         }
 
     def cancelar(self):
@@ -287,10 +360,42 @@ class ReqModelLines(models.Model):
     products = fields.Many2one(
         'product.product', string='Product', required=True)
     changed = fields.Boolean(string='cambio?')
-    acumulacion = fields.Integer(string='Cantidad retirada')
-    p_order_line_id = fields.One2many(comodel_name='purchase.order.line', inverse_name='req_model_line_id', string='Purchase line')
-    available_qty = fields.Integer(string='Cantidad Disponible')
+    acumulacion = fields.Integer(string='Cantidad acumulada')
+    # p_order_line_id = fields.One2many(comodel_name='purchase.order.line', inverse_name='req_model_line_id', string='Purchase line')
+    available_qty = fields.Integer(string='Cantidad Disponible',  compute="_compute_available_qty")
     product_qty = fields.Integer(string='Cantidad Planificada')
+    purchased_qty = fields.Float(
+        string="Cantidad Retirada",
+        compute="_compute_purchased_qty",
+       
+    )
+
+
+    purchase_lines = fields.Many2many(
+        comodel_name="purchase.order.line",
+        relation="purchase_request_purchase_order_line_rel",
+        column1="purchase_request_line_id",
+        column2="purchase_order_line_id",
+        string="Purchase Order Lines",
+        readonly=True,
+        copy=False,
+    )
+    
+    def _compute_available_qty(self):
+        for rec in self:
+            rec.available_qty = 0.0
+            print("####buena",rec.purchase_lines)
+            for line in rec.linea_id:
+                print("####buena15151515::::", line.withdrawn_qty)
+                rec.available_qty = line.product_qty - line.withdrawn_qty
+
+    def _compute_purchased_qty(self):
+        for rec in self:
+            rec.purchased_qty = 0.0
+            print("####buena",rec.purchase_lines)
+            for line in rec.purchase_lines.filtered(lambda x: x.state != "cancel"):
+                print("####buena")
+                rec.purchased_qty += line.product_qty
 
     def devolver(self):
         return {
@@ -303,6 +408,7 @@ class ReqModelLines(models.Model):
             'view_id': self.env.ref('custom_requisitions.req_model_devolver_wizard').id,
             'target': 'new',
         }
+
 
 
 class ReqLaboresLines(models.Model):
@@ -337,8 +443,7 @@ class ReqsubcontratacionesLines(models.Model):
 class CanalizacionLines(models.Model):
     _name = "req.canalizaciones.lines"
 
-    linea_id = fields.Many2one(
-        comodel_name='job.cost.line', string='Jobs Line')
+    linea_id = fields.Many2one('job.canalizaciones.lines', string='Jobs Line')
     number = fields.Integer(string='Numero')
     description = fields.Char(string='Descripción')
     qty = fields.Integer(string='Cantidad a retirar')
@@ -354,8 +459,8 @@ class CanalizacionLines(models.Model):
 class CableadoLines(models.Model):
     _name = "req.cableado.lines"
 
-    linea_id = fields.Many2one(
-        comodel_name='job.cost.line', string='Jobs Line')
+    # linea_id = fields.Many2one(
+    #     comodel_name='job.cableado.lines', string='Jobs Line')
     number = fields.Integer(string='Numero')
     description = fields.Char(string='Descripción')
     qty = fields.Integer(string='Cantidad a retirar')
@@ -371,8 +476,8 @@ class CableadoLines(models.Model):
 class AccesoriadoLines(models.Model):
     _name = "req.accesoriado.lines"
 
-    linea_id = fields.Many2one(
-        comodel_name='job.cost.line', string='Jobs Line')
+    # linea_id = fields.Many2one(
+    #     comodel_name='job.accesoriado.lines', string='Jobs Line')
     number = fields.Integer(string='Numero')
     description = fields.Char(string='Descripción')
     qty = fields.Integer(string='Cantidad a retirar')

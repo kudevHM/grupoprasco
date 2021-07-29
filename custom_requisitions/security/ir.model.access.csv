@@ -6,3 +6,8 @@ req_subcontrataciones_lines_id,req.subcontrataciones.lines,model_req_subcontrata
 req_canalizaciones_lines_id,req.canalizaciones.lines,model_req_canalizaciones_lines,,1,1,1,1
 req_cableado_lines_id,req.cableado.lines,model_req_cableado_lines,,1,1,1,1
 req_accesoriado_lines_id,req.accesoriado.lines,model_req_accesoriado_lines,,1,1,1,1
+job_canalizaciones_lines_id,job.canalizaciones.lines,model_job_canalizaciones_lines,,1,1,1,1
+job_cableado_lines_id,job.cableado.lines,model_job_cableado_lines,,1,1,1,1
+job_accesoriado_lines_id,job.accesoriado.lines,model_job_accesoriado_lines,,1,1,1,1
+requisition_purchase_wizard,requisition.purchase.wizard,model_requisition_purchase_wizard,,1,1,1,1
+requisition_purchase__line_wizard,requisition.purchase.line_wizard,model_requisition_purchase_line_wizard,,1,1,1,1

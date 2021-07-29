@@ -25,9 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'security/groups.xml',
         'views/wizard.xml',
+        'wizards/requisition_purchase_wizard.xml',
         'views/budget_wizard.xml',
         'data/categorias.xml',
+        'data/req_model.xml',
         'data/productos.xml',
         'views/menu_items.xml',
       #  "views/product_views.xml",

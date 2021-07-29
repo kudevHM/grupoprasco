@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.module.category" id="module_req_model">
+            <field name="name">Requisición</field>
+            <field name="description">re.model</field>
+            <field name="sequence">50</field>
+    </record>
+    <record id="requisitions_user" model="res.groups">
+        <field name="name">Usuario</field>
+        <field name="category_id" ref="module_req_model"/>
+    </record>
+    <record id="requisitions_manager" model="res.groups">
+        <field name="name">Jefe de Area</field>
+        <field name="category_id" ref="module_req_model"/>
+        <field name="implied_ids" eval="[(4, ref('requisitions_user'))]"/>
+    </record>
+
+</odoo>

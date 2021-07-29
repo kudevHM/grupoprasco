@@ -16,11 +16,11 @@
                         <field name="labores_data" /> 
                         <field name="subcontrataciones_data" />                     
                     </group>
-                    <!-- <group>
+                    <group>
                         <field name="canalizacion_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/> 
                         <field name="cableado_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/> 
                         <field name="accesoriado_data" attrs="{'invisible':[('torres_departamento', '!=', True)]}"/>                 
-                    </group> -->
+                    </group>
                 </group> 
                 <footer> 
                     <button string="Cancel" special="cancel" class="oe_highlight"/>

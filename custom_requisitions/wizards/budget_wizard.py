@@ -74,6 +74,35 @@ class BudgetWizard(models.TransientModel):
                     "direct_id":self.env.context.get('req_id'),
                 }
                 self.env["job.cost.line"].sudo().create(obj)   
+    
+    
+    def import_data(self, datos, modelo):
+        fp = tempfile.NamedTemporaryFile(suffix=".xlsx", delete=False)
+        fp.write(binascii.a2b_base64(datos)) # self.xls_file is your binary field
+        fp.seek(0)
+        workbook = xlrd.open_workbook(fp.name)
+        sheet = workbook.sheet_by_index(0)
+        for row_no in range(sheet.nrows):
+            if row_no <= 0:
+                fields = map(lambda row:row.value.encode('utf-8'), sheet.row(row_no))
+            else:
+                line = (map(lambda row:isinstance(row.value, str) and row.value.encode('utf-8') or str(row.value), sheet.row(row_no)))
+                arreglo = list(line)
+                producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[0],'utf-8'))], limit=1)
+                if len(producto_tmpl) == 0:
+                    producto_tmpl = self.env['product.template'].search([("name", "=", str(arreglo[0]))], limit=1)
+                if len(producto_tmpl) == 0:
+                    raise Warning(_("No se encontro el producto " + arreglo[1]))
+                producto = self.env['product.product'].search([('product_tmpl_id', '=', producto_tmpl.id)], limit=1)
+                date = datetime(*xlrd.xldate_as_tuple(int(float(arreglo[3])), 0))
+                obj={
+                    "product_id":producto.id,
+                    "description":arreglo[1],
+                    "product_qty":int(float(arreglo[2])),
+                    "date":date,
+                    "job_costing_id":self.env.context.get('req_id')                 
+                }
+                self.env[modelo].sudo().create(obj)  
 
     def import_all(self):
         if self.material_data:
@@ -82,12 +111,12 @@ class BudgetWizard(models.TransientModel):
             self.import_data_from_excel(self.labores_data, 'labores')
         if self.subcontrataciones_data:
             self.import_data_from_excel(self.subcontrataciones_data, 'subcontrataciones')                                        
-     #   if self.canalizacion_data:
-      #      self.import_data_from_excel(self.canalizacion_data, 'req.canalizaciones.lines')
-       # if self.cableado_data:
-         #   self.import_data_from_excel(self.cableado_data, 'req.cableado.lines') 
-        #if self.accesoriado_data:    
-          #  self.import_data_from_excel(self.accesoriado_data, 'req.accesoriado.lines')     
+        if self.canalizacion_data:
+           self.import_data(self.canalizacion_data,'job.canalizaciones.lines')
+        if self.cableado_data:
+           self.import_data(self.cableado_data, 'job.cableado.lines') 
+        if self.accesoriado_data:    
+           self.import_data(self.accesoriado_data, 'job.accesoriado.lines')     
 
     # def import_button_materiales(self):
     #     self.import_data_from_excel(self.material_data, 'req.model.lines')
