@@ -2,7 +2,8 @@
 from odoo.exceptions import Warning, UserError
 from odoo import models, fields, _, api
 from datetime import datetime, date
-class ReqModelWizard(models.TransientModel):
+
+class ReqModelWizard(models.Model):
     _name='requisition.purchase.wizard'
 
 
@@ -24,6 +25,8 @@ class ReqModelWizard(models.TransientModel):
         required=True,
         copy=True,
     )
+    name = fields.Char(string="Nombre")
+    state = fields.Selection([('draft', 'Borrador'),('vobo', 'Vobo'),('valid','Validar'),('finished', 'Terminado'),('cancel', 'Cancelado')],default="draft")
     picking_type_id = fields.Many2one(
         comodel_name="stock.picking.type",
         string="Picking Type",
@@ -34,6 +37,7 @@ class ReqModelWizard(models.TransientModel):
         'job.costing',
         string='Proyecto',
         )
+    job_name = fields.Char(string="Nombre de Proyecto", related='job_id.name' ) 
     supplier_id =  fields.Many2one(
         'res.partner',
         string='Provedor',
@@ -68,10 +72,29 @@ class ReqModelWizard(models.TransientModel):
         return data
 
 
+    @api.multi
+    def write(self, values):
+        res = super(ReqModelWizard, self).write(values)
+        if self.state=="draft":
+            for line in self.req_lines_ids:
+                if line.qty < 0.0:
+                    raise UserError(_("Ingrese una cantidad positiva."))
+                if line.qty > line.available_qty :
+                    raise UserError(_("La cantidad a retirar debe ser menor o igual a la cantidad disponible.")) 
+            self.state = "vobo"
+        return res
 
+    def validate_vobo(self):
+        self.state= "valid"
 
-
-
+    @api.multi
+    def unlink(self):
+        print("####################ingreso al eliminar")
+        for rec in self:
+            if rec.state not in ('draft') :
+                raise Warning(_('Solo puede eliminar la requisición en estado borrador'))
+             
+        return super(ReqModelWizard, self).unlink()
 
     @api.model
     def _get_purchase_line_onchange_fields(self):
@@ -99,6 +122,7 @@ class ReqModelWizard(models.TransientModel):
 
         
         date_required = item.date_planned
+        print("##noooooooo",item.req_model_line_id)
         vals = {
             "name": product.name,
             "order_id": po.id,
@@ -129,19 +153,22 @@ class ReqModelWizard(models.TransientModel):
             # line = item.line_id
             if line.pr_active == True:
                 if line.qty <= 0.0:
-                    raise UserError(_("Enter a positive quantity."))
+                    raise UserError(_("Ingrese una cantidad positiva."))
+                if line.qty > line.available_qty :
+                    raise UserError(_("La cantidad a retirar debe ser menor o igual a la cantidad disponible.")) 
                 if not purchase:
                     po_data = self._prepare_purchase_order(line)
                     purchase = purchase_obj.create(po_data)
                 print("##############prq",purchase)
                 po_line_data = self._prepare_purchase_order_line(purchase, line)
                 po_line = po_line_obj.create(po_line_data)
-                new_pr_line = True
+                # new_pr_line = True
                 # new_qty = pr_line_obj._calc_new_qty(
                 #     line, po_line=po_line, new_pr_line=new_pr_line
                 # )
                 res.append(purchase.id)
 
+        self.state = "finished"
         return {
             "domain": [("id", "in", res)],
             "name": _("RFQ"),
@@ -152,7 +179,7 @@ class ReqModelWizard(models.TransientModel):
             "type": "ir.actions.act_window",
         }
 
-class ReqModelWizard(models.TransientModel):
+class ReqModelWizardLine(models.Model):
     _name='requisition.purchase.line.wizard'
     
     
@@ -160,7 +187,8 @@ class ReqModelWizard(models.TransientModel):
         'product.product',
         string='Producto',
         )
-    qty = fields.Integer(string='Cantidad a retirar')    
+    qty = fields.Integer(string='Cantidad a retirar')  
+    qty_expected  = fields.Integer(string='Cantidad Prevista')  
     available_qty = fields.Integer(string='Cantidad Disponible')
     wiz_id = fields.Many2one(
         "requisition.purchase.wizard",
@@ -177,6 +205,17 @@ class ReqModelWizard(models.TransientModel):
     req_labores_line_id = fields.Many2one(comodel_name='req.labores.lines', string='req model line')
     req_subcontrataciones_line_id = fields.Many2one(comodel_name='req.subcontrataciones.lines', string='req model line')
     date_planned = fields.Datetime("Date planned")
+    # req_model_line_id = fields.Many2many(
+    #     comodel_name="req.model.lines",
+    #     relation="requisition_purchase_wizard_order_line_rel",
+    #     column1="requisition_purchase_line_wizard_line_id",
+    #     column2="requisition_purchase_wizard_line_id",
+    #     string="Purchase Request Lines",
+    #     readonly=True,
+    #     copy=False,
+    # )
+    job_type_id = fields.Many2one('job.type', string='Tipo de trabajo',related='req_model_line_id.job_type_id' )
+    reference = fields.Char(string="Referencia",related='req_model_line_id.reference' )
 
     @api.onchange('qty')
     def onchange_field(self):

@@ -94,11 +94,23 @@
 					<button name="validate_pr" string="VoBo" type="object" states="draft" class="oe_highlight" />
 					<button name="purchase_request_line_make_purchase_order" string="Generar PO"  states="valid" type="object" class="oe_highlight" groups="custom_requisitions.requisitions_manager"/>
 					<button name="purchase_request_line_finished" string="Hecho"  states="valid" type="object" class="oe_highlight" groups="custom_requisitions.requisitions_manager"/>
-					<field name="state" widget="statusbar" statusbar_visible="draft,valid,finished,cancel" />
+					<field name="state" widget="statusbar" statusbar_visible="draft,valid,valid,finished,cancel" />
 			
 				</header>
 				<sheet>
 					<div class="oe_button_box" name="button_box">
+						<button
+							type="object"
+							name="action_view_requisition_order"
+							class="oe_stat_button"
+							icon="fa-list-alt"
+						>
+							<field
+								name="requisition_count"
+								widget="statinfo"
+								string="requisition lines"
+							/>
+						</button>
 						<button
 							type="object"
 							name="action_view_purchase_order"
@@ -113,11 +125,13 @@
 							/>
 						</button>
 						
+						
 					</div>
+
 					<div class="oe_title">
                         <div class="oe_title">
 							<h1>
-								<field name="name"/><br/>
+								<field name="name" readonly="1"/><br/>
 							</h1>
                     	</div>
 					</div>
@@ -132,11 +146,14 @@
 						<page string="Materiales" widget="one2many_list">
 							<field name="req_lines_ids" mode="tree" widget="one2many_list" nolabel="1">
 								<tree editable="bottom" delete="0" create="0">
-									<field name="products" />
-									<field name="description" />
+									<field name="products" readonly="1" />
+									<field name="description" readonly="1" />
+									<field name="job_type_id" readonly="1"/>
+									<field name="reference" readonly="1"/>
 									<field name="available_qty" readonly="1"/>
+									<field name="qty_expected" readonly="1"/>
 									<!-- <field name="qty" /> -->
-									<field name="req_date" />
+									<field name="req_date" readonly="1"/>
 									<!-- <field name="acumulacion" readonly="1"/> -->
 									<field name="purchased_qty" readonly="1"/>
 									<!-- <button name="devolver" string="Devolver" type="object" icon="fa-rotate-left"/> -->
@@ -147,11 +164,11 @@
 						<page string="Labores" widget="one2many_list">
 							<field name="req_labores_ids" mode="tree" widget="one2many_list" nolabel="1">
 								<tree editable="bottom" create="0">
-									<field name="products" />
-									<field name="description" />
-									<field name="qty" />
-									<field name="req_date" />
-									<field name="acumulacion" />
+									<field name="products" readonly="1"/>
+									<field name="description" readonly="1"/>
+									<field name="qty" readonly="1"/>
+									<field name="req_date" readonly="1" />
+									<field name="acumulacion" readonly="1" />
 								<!-- 	<field name="changed"/> -->
 
 									<!-- <field name="req_id"/> -->
@@ -233,6 +250,7 @@
 			<tree string="Requisiciones">
 				<field name="name" />
 				<field name="p_order" />
+				<field name="job_name"/>
 				<field name="employee_id" />
 				<field name="Responsible" />
 				<field name="state"/>
@@ -241,7 +259,8 @@
 	</record>
 	<menuitem id="menu_job_cost_project_requisition_menu" name="Requisicion" parent="odoo_job_costing_management.menu_job_managmt"  sequence="2"/>
 	<menuitem id="menu_job_cost_project_requisition" name="Requisicion" parent="custom_requisitions.menu_job_cost_project_requisition_menu" action="action_open_requisitions" sequence="1" />
-    <record model="ir.actions.act_window" id="odoo_job_costing_management.action_job_costing">
+    
+	<record model="ir.actions.act_window" id="odoo_job_costing_management.action_job_costing">
         <field name="name">Job Cost Sheets</field>
         <field name="res_model">job.costing</field>
         <field name="domain">['|', ('Responsible','=',uid), ("admin_user", "=", uid)]</field>

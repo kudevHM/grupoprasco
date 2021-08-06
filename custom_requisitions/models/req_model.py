@@ -20,6 +20,9 @@ class ReqModel(models.Model):
     p_order = fields.Char(string='Proyecto', store=True)
     p_order2 = fields.Many2one('job.costing', string='Proyecto',
                                required=True, domain="[('has_req', '!=', True  )]")
+    job_name = fields.Char(string="Nombre de Proyecto", related='p_order2.name' )       
+    requisition_wiz = fields.One2many(
+        comodel_name='requisition.purchase.wizard', inverse_name='rec_model', string='Materiales')                   
     employee_id = fields.Many2one(
         'res.partner', string='Empleado', required=True)
     date = fields.Date(string='Fecha de Creación')
@@ -43,9 +46,16 @@ class ReqModel(models.Model):
     purchase_count = fields.Integer(
         string="Purchases count", compute="_compute_purchase_count", readonly=True
     )
+    requisition_count = fields.Integer(
+        string="Purchases count", compute="_compute_requisition_count", readonly=True
+    )
     @api.depends("req_lines_ids")
     def _compute_purchase_count(self):
         self.purchase_count = len(self.mapped("req_lines_ids.purchase_lines.order_id"))
+
+    @api.depends("req_lines_ids")
+    def _compute_requisition_count(self):
+        self.requisition_count = len(self.mapped("req_lines_ids.purchase_request_lines.wiz_id"))    
 
 
     @api.model
@@ -67,6 +77,20 @@ class ReqModel(models.Model):
             ]
             action["res_id"] = lines.id
         return action
+
+    @api.multi
+    def action_view_requisition_order(self):
+        action = self.env.ref("custom_requisitions.action_requisition_purchase_wizard").read()[0]
+        lines = self.mapped("requisition_wiz.req_lines_ids.wiz_id")
+        if len(lines) > 1:
+            action["domain"] = [("id", "in", lines.ids)]
+        elif lines:
+            action["views"] = [
+                (self.env.ref("custom_requisitions.requisition_purchase_wizard_form").id, "form")
+            ]
+            action["res_id"] = lines.id
+        return action
+
 
     @api.multi
     def action_open_import_wizard(self):
@@ -178,11 +202,14 @@ class ReqModel(models.Model):
 
         data = []
         view = self.env.ref('custom_requisitions.requisition_purchase_wizard_form')
+        
+        name = self.p_order2.number + "/"+ str(self.requisition_count)
         purchase_order = self.env['requisition.purchase.wizard'].create({
             'supplier_id':self.employee_id.id,
             'job_id':self.p_order2.id,
             'rec_model':self.id,
-            'responsible':self.Responsible.id
+            'responsible':self.Responsible.id,
+            'name':name
         })
 
         for line in self.req_lines_ids:
@@ -196,8 +223,9 @@ class ReqModel(models.Model):
             vals["req_model_line_id"] = line.id
             vals['date_planned'] = line.req_date
             vals['available_qty'] = line.available_qty
-            
+            vals['qty_expected'] = line.qty_expected
             data.append(vals)
+        print("#@@@@@@data:",data)    
         line = self.env['requisition.purchase.line.wizard'].create(data)
         print("####",purchase_order)
         # print("####",line.product_id.name)
@@ -363,12 +391,15 @@ class ReqModelLines(models.Model):
     acumulacion = fields.Integer(string='Cantidad acumulada')
     # p_order_line_id = fields.One2many(comodel_name='purchase.order.line', inverse_name='req_model_line_id', string='Purchase line')
     available_qty = fields.Integer(string='Cantidad Disponible',  compute="_compute_available_qty")
+    qty_expected  = fields.Integer(string='Cantidad Prevista', compute="_compute_purchased_qty") 
     product_qty = fields.Integer(string='Cantidad Planificada')
     purchased_qty = fields.Float(
         string="Cantidad Retirada",
         compute="_compute_purchased_qty",
        
     )
+    job_type_id = fields.Many2one('job.type', string='Tipo de trabajo',related='linea_id.job_type_id' )
+    reference = fields.Char(string="Referencia",related='linea_id.reference' )
 
 
     purchase_lines = fields.Many2many(
@@ -380,22 +411,37 @@ class ReqModelLines(models.Model):
         readonly=True,
         copy=False,
     )
+    # purchase_request_lines = fields.Many2many(
+    #     comodel_name="requisition.purchase.line.wizard",
+    #     relation="requisition_purchase_wizard_order_line_rel",
+    #     column1="requisition_purchase_wizard_line_id",
+    #     column2="requisition_purchase_line_wizard_line_id",
+    #     string="Purchase Order Lines",
+    #     readonly=True,
+    #     copy=False,
+    # )
+    purchase_request_lines = fields.One2many(comodel_name='requisition.purchase.line.wizard', inverse_name='req_model_line_id', string='requisition wiz Line')
     
     def _compute_available_qty(self):
         for rec in self:
             rec.available_qty = 0.0
-            print("####buena",rec.purchase_lines)
             for line in rec.linea_id:
-                print("####buena15151515::::", line.withdrawn_qty)
                 rec.available_qty = line.product_qty - line.withdrawn_qty
 
     def _compute_purchased_qty(self):
         for rec in self:
             rec.purchased_qty = 0.0
-            print("####buena",rec.purchase_lines)
+            rec.qty_expected = 0.0
+            print("####buena",rec.purchase_request_lines)
             for line in rec.purchase_lines.filtered(lambda x: x.state != "cancel"):
                 print("####buena")
                 rec.purchased_qty += line.product_qty
+            for line in rec.purchase_request_lines:
+                print("####buena!!!!!!!!!!!!!!")
+                rec.qty_expected += line.qty
+            qty_expected = self.env['requisition.purchase.line.wizard'].search([('req_labores_line_id','=',rec.id)])
+            print("######testtttttt",qty_expected)
+
 
     def devolver(self):
         return {
