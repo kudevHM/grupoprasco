@@ -35,12 +35,15 @@
                             <field name="req_lines_ids" nolabel="1" attrs="{'readonly':[('state', '=', 'finished')]}">
                                 <tree editable="bottom" create="false" delete="false" decoration-success="pr_active==True">
                                     <field name="product_id" readonly="1" />
+                                    <field name="name" readonly="1" />
                                     <field name="job_type_id" readonly="1"/>
 									<field name="reference" readonly="1"/>
-                                    <field name="available_qty" readonly="1" invisible="1"/>
-                                    <field name="qty_expected" readonly="1"/>
+                                    <field name="date_planned" readonly="1" />
+                                    <field name="planned_quantity" readonly="1"/>
+                                    <field name="available_qty" readonly="1"/>
+                                    <!-- <field name="requisition_line_qty" readonly="1"/> -->
                                     <field name="qty" widget="integer" />
-                                    <field name="name" invisible="1"/>
+                                    
                                     <field name="price_unit"  invisible="1"/>
                                     <field name="price_after" invisible="1"/>
                                     <field name="product_uom_id"  invisible="1"/>
@@ -52,8 +55,8 @@
                         </page>
                     </notebook>
                     <footer> 
-                        <button name="write" type="object"  states="draft" string="Save"/>    
-                        <button name="unlink"  states="draft" type="object" string="Cancel"/>
+                        <button name="write" type="object"  states="draft" string="Save" class="oe_rigth oe_button_box"/>    
+                        <button name="unlink"  states="draft" type="object" string="Cancel" class="oe_rigth"/>
                         <!-- <button name="unlink"  states="draft" string="Cancel" special="cancel" class="oe_link"/> -->
                     </footer>
                 </sheet>

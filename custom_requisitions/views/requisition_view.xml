@@ -117,6 +117,7 @@
 							class="oe_stat_button"
 							attrs="{'invisible':[('purchase_count', '=', 0)]}"
 							icon="fa-shopping-cart"
+							groups="custom_requisitions.purchase_custom_requisitions_manager"
 						>
 							<field
 								name="purchase_count"
@@ -150,12 +151,14 @@
 									<field name="description" readonly="1" />
 									<field name="job_type_id" readonly="1"/>
 									<field name="reference" readonly="1"/>
+									<field name="planned_quantity" readonly="1"/>
 									<field name="available_qty" readonly="1"/>
-									<field name="qty_expected" readonly="1"/>
+									<!-- <field name="qty_expected" readonly="1"/> -->
 									<!-- <field name="qty" /> -->
 									<field name="req_date" readonly="1"/>
 									<!-- <field name="acumulacion" readonly="1"/> -->
-									<field name="purchased_qty" readonly="1"/>
+									<!-- <field name="purchased_qty" readonly="1"/> -->
+									<field name="requisition_line_qty"/>
 									<!-- <button name="devolver" string="Devolver" type="object" icon="fa-rotate-left"/> -->
 									<!-- <field name="req_id"/> -->
 								</tree>

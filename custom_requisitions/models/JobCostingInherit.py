@@ -140,7 +140,7 @@ class JobCostingInherit(models.Model):
         #buscar canalizacion
         for item in self.job_canalizaciones_ids:
             req_line_ids =self.env["req.canalizaciones.lines"].search([("linea_id","=", item.id)], limit=1)
-            print("###holq!!!!!!",req_line_ids)
+           
             if req_line_ids:
                 req_line_ids.write({"products": item.product_id.id,"description":item.description,"available_qty":item.product_qty,"qty": 0,"req_date" :item.date,"req_id": req_id.id})
         #buscar cableado
@@ -177,7 +177,7 @@ class JobCostingInherit(models.Model):
         req_canalizacion = self.env['req.canalizaciones.lines']
         req_cable = self.env['req.cableado.lines']
         req_accesorios = self.env['req.accesoriado.lines']
-        print("###",req_canalizacion)
+
         for item in self.job_cost_line_ids:
             job_id = item.id
             _logger.info('JOB_ID %s', job_id)
@@ -216,7 +216,7 @@ class JobCostingInherit(models.Model):
             req_subcontrataciones.create(vals)    
         for item4 in self.job_canalizaciones_ids:
             job_id = item4.id
-            print("###",job_id)
+     
             vals={}
             vals["linea_id"]=item4.id
             vals["products"]=item4.product_id.id
@@ -290,7 +290,7 @@ class JobCostingLineInherit(models.Model):
         for rec in self:
             rec.withdrawn_qty = 0.0
             for line in rec.req_linea_ids:
-                rec.withdrawn_qty = line.purchased_qty
+                rec.withdrawn_qty = line.requisition_line_qty
 
     @api.onchange('cost_price')
     def onchange_listPrice(self):

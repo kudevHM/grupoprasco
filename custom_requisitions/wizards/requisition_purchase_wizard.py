@@ -89,7 +89,6 @@ class ReqModelWizard(models.Model):
 
     @api.multi
     def unlink(self):
-        print("####################ingreso al eliminar")
         for rec in self:
             if rec.state not in ('draft') :
                 raise Warning(_('Solo puede eliminar la requisición en estado borrador'))
@@ -122,7 +121,7 @@ class ReqModelWizard(models.Model):
 
         
         date_required = item.date_planned
-        print("##noooooooo",item.req_model_line_id)
+
         vals = {
             "name": product.name,
             "order_id": po.id,
@@ -159,7 +158,6 @@ class ReqModelWizard(models.Model):
                 if not purchase:
                     po_data = self._prepare_purchase_order(line)
                     purchase = purchase_obj.create(po_data)
-                print("##############prq",purchase)
                 po_line_data = self._prepare_purchase_order_line(purchase, line)
                 po_line = po_line_obj.create(po_line_data)
                 # new_pr_line = True
@@ -169,15 +167,15 @@ class ReqModelWizard(models.Model):
                 res.append(purchase.id)
 
         self.state = "finished"
-        return {
-            "domain": [("id", "in", res)],
-            "name": _("RFQ"),
-            "view_mode": "tree,form",
-            "res_model": "purchase.order",
-            "view_id": False,
-            "context": False,
-            "type": "ir.actions.act_window",
-        }
+        # return {
+        #     "domain": [("id", "in", res)],
+        #     "name": _("RFQ"),
+        #     "view_mode": "tree,form",
+        #     "res_model": "purchase.order",
+        #     "view_id": False,
+        #     "context": False,
+        #     "type": "ir.actions.act_window",
+        # }
 
 class ReqModelWizardLine(models.Model):
     _name='requisition.purchase.line.wizard'
@@ -195,7 +193,7 @@ class ReqModelWizardLine(models.Model):
         string="Wizard",
     )
     pr_active = fields.Boolean("Activo", defaul=False)
-    name = fields.Char("Nombre")
+    name = fields.Char("Descripción")
     price_unit = fields.Float("precio")
     price_after = fields.Float("precio Anterior")
     product_uom_id = fields.Many2one(
@@ -204,7 +202,8 @@ class ReqModelWizardLine(models.Model):
     req_model_line_id = fields.Many2one(comodel_name='req.model.lines', string='req model line')
     req_labores_line_id = fields.Many2one(comodel_name='req.labores.lines', string='req model line')
     req_subcontrataciones_line_id = fields.Many2one(comodel_name='req.subcontrataciones.lines', string='req model line')
-    date_planned = fields.Datetime("Date planned")
+    date_planned = fields.Datetime("Fecha",default=datetime.today())
+    planned_quantity = fields.Integer(string='Cantidad Planificada', compute="_compute_planned_quantity")
     # req_model_line_id = fields.Many2many(
     #     comodel_name="req.model.lines",
     #     relation="requisition_purchase_wizard_order_line_rel",
@@ -216,6 +215,13 @@ class ReqModelWizardLine(models.Model):
     # )
     job_type_id = fields.Many2one('job.type', string='Tipo de trabajo',related='req_model_line_id.job_type_id' )
     reference = fields.Char(string="Referencia",related='req_model_line_id.reference' )
+
+
+    def _compute_planned_quantity(self):
+        for rec in self:
+            rec. planned_quantity= 0
+            for line in rec.req_model_line_id:
+                rec.planned_quantity = line.planned_quantity
 
     @api.onchange('qty')
     def onchange_field(self):

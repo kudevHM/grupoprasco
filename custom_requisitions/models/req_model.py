@@ -221,14 +221,14 @@ class ReqModel(models.Model):
             vals["price_after"] = line.linea_id.cost_price or 0
             vals["product_uom_id"] = line.products.uom_id.id
             vals["req_model_line_id"] = line.id
-            vals['date_planned'] = line.req_date
+            # vals['date_planned'] = line.req_date
             vals['available_qty'] = line.available_qty
             vals['qty_expected'] = line.qty_expected
             data.append(vals)
-        print("#@@@@@@data:",data)    
+   
         line = self.env['requisition.purchase.line.wizard'].create(data)
-        print("####",purchase_order)
-        # print("####",line.product_id.name)
+        
+        
 
 
         return {
@@ -240,6 +240,7 @@ class ReqModel(models.Model):
             'views': [(view.id, 'form')],
             'view_id': view.id,
             'target': 'new',
+            'flags': {'form': {'action_buttons': False}},
             'res_id': purchase_order.id,
             'context': self.env.context,
         }
@@ -391,9 +392,15 @@ class ReqModelLines(models.Model):
     acumulacion = fields.Integer(string='Cantidad acumulada')
     # p_order_line_id = fields.One2many(comodel_name='purchase.order.line', inverse_name='req_model_line_id', string='Purchase line')
     available_qty = fields.Integer(string='Cantidad Disponible',  compute="_compute_available_qty")
-    qty_expected  = fields.Integer(string='Cantidad Prevista', compute="_compute_purchased_qty") 
+    qty_expected  = fields.Integer(string='Cantidad Prevista', compute="_compute_purchased_qty")
+    planned_quantity = fields.Integer(string='Cantidad Planificada', compute="_compute_planned_quantity")
     product_qty = fields.Integer(string='Cantidad Planificada')
     purchased_qty = fields.Float(
+        string="Cantidad Retirada(PO)",
+        compute="_compute_purchased_qty",
+       
+    )
+    requisition_line_qty = fields.Float(
         string="Cantidad Retirada",
         compute="_compute_purchased_qty",
        
@@ -431,16 +438,20 @@ class ReqModelLines(models.Model):
     def _compute_purchased_qty(self):
         for rec in self:
             rec.purchased_qty = 0.0
-            rec.qty_expected = 0.0
-            print("####buena",rec.purchase_request_lines)
+            rec.requisition_line_qty = 0.0
             for line in rec.purchase_lines.filtered(lambda x: x.state != "cancel"):
-                print("####buena")
+               
                 rec.purchased_qty += line.product_qty
             for line in rec.purchase_request_lines:
-                print("####buena!!!!!!!!!!!!!!")
-                rec.qty_expected += line.qty
-            qty_expected = self.env['requisition.purchase.line.wizard'].search([('req_labores_line_id','=',rec.id)])
-            print("######testtttttt",qty_expected)
+                
+                rec.requisition_line_qty += line.qty
+         
+
+    def _compute_planned_quantity(self):
+        for rec in self:
+            rec. planned_quantity= 0
+            for line in rec.linea_id:
+                rec.planned_quantity = line.product_qty
 
 
     def devolver(self):
