@@ -36,7 +36,9 @@
       #  "views/product_views.xml",
         "views/requisition_view.xml",
         "wizards/devolver.xml",
+        "wizards/report_requisition.xml",
         "report/report.xml",
+        "report/report_custom_requisition.xml",
         "views/purchase_order.xml",
 
         ],

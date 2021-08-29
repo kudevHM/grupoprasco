@@ -74,6 +74,26 @@ class JobCostingInherit(models.Model):
         for rec in self:
             rec.subc_discount = sum([(p.dcto) for p in rec.job_overhead_line_ids])   
 
+    @api.multi
+    def action_report_requisition(self):
+        active_id = self._context.get('active_id', False)
+        job_id = self.env['job.costing'].browse(active_id)
+       
+        print("##############ingreso al report")
+        view_id = self.env.ref('custom_requisitions.requisition_report_wizard_form').id
+      
+        return {
+            'type': 'ir.actions.act_window',
+            'context': {'default_job_id': job_id.id},
+            'name': 'Report',
+            'res_model': 'requisition.report.wizard',
+            'view_mode': 'form',
+            'view_type': 'form',
+            'view_id': view_id,
+            'target': 'new',
+        }
+        
+
     # @api.multi
     # def action_show_requisitions(self):
     #     self.ensure_one()

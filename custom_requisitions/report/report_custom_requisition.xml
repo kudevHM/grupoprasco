@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="custom_requisitions_action_server" model="ir.actions.server">
+        <field name="name">Report requisition</field>
+        <field name="model_id" ref="model_job_costing"/>
+        <field name="binding_model_id" ref="model_job_costing"/>
+        <field name="state">code</field>
+        <field name="binding_type">report</field>
+        <field name="code">
+            action = model.action_report_requisition()
+        </field>
+    </record>
+
+    <record id="paperformat_requisition" model="report.paperformat">
+        <field name="name">European A4 Landscape</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Landscape</field>
+        <field name="margin_top">10</field>
+        <field name="margin_bottom">13</field>
+        <field name="margin_left">2</field>
+        <field name="margin_right">2</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">15</field>
+        <field name="dpi">90</field>
+    </record>
+    <report id="requisition_report"
+            model="requisition.report.wizard"
+            string="Requisition Report"
+            report_type="qweb-pdf"
+            name="custom_requisitions.report_template_requisition"
+            paperformat="custom_requisitions.paperformat_requisition"
+            menu="False"/>
+           
+
+    
+   
+
+    <template id="report_template_requisition">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="web.internal_layout">
+                    <div class="page">
+                        <style>
+                           
+                            .table tr td,
+                            .table.no-border tr th {
+                                border: none;
+                            }
+                        </style>
+
+                        <div>
+                            <div  class="text-center" style="border: 1px solid black;background-color: #2E4053 ;color:#FBFCFC;font-size: 18px;">
+                                <strong>Reporte  Ejecutivo Presupuestos de Proyecto</strong>
+                            </div>
+                            <div style="border-bottom: 1px solid black;">
+                                <table class="table no-border" >
+                                        <tbody>
+                                            <tr>
+                                                <td style="text-align:left;" >
+                                                    Nombre:   <span t-esc="doc.name"/>
+                                                </td>
+                                                
+                                                <td style="text-align:right;">
+                                                    Fecha inicial Reporte:   <span t-esc="date_start"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="text-align:left;">
+                                                    Proyecto:   <span t-esc="doc.project_id.name"/>
+                                                </td>
+                                               
+                                                <td style="text-align:right;">
+                                                    Fecha Final Reporte:   <span t-esc="date_end"/>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tr>
+                                                <td>
+                                                    Cuenta Analítica:   <span t-esc="doc.analytic_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Cliente:   <span t-esc="doc.partner_id.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Responsable:   <span t-esc="doc.Responsible.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Creado por:  <span t-esc="doc.create_uid.name"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                </table>
+                                
+                            </div>
+                        </div>
+                        <div  class="text-center" style="border: 1px solid black;background-color: #2E4053 ;color:#FBFCFC;font-size: 18px;">
+                            <strong>Costo Presupuesto de Proyectos</strong>
+                        </div>
+                        <div style="border-bottom: 1px solid black;">
+                            <table class="table no-border">
+                                <tr>
+                                    <td style="text-align:right;">Fecha inicial Reporte: <span t-esc="date_start"/></td> 
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;">Fecha Final Reporte: <span t-esc="date_end"/></td>
+                                </tr>
+                            </table>
+                            <table class="table no-border">
+                               
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">No. Proyecto</th>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Nombre de Proyecto</th>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Fecha de Creacion</th>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Costo de Proyecto</th>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                    <tr>
+                                        <td style="white-space: nowrap;"><t t-esc="doc.number"/></td>
+                                        <td style="white-space: nowrap;"><t t-esc="doc.name"/></td>
+                                        <td style="white-space: nowrap;"><t t-esc="doc.start_date"/></td>
+                                        <td style="white-space: nowrap;"><t t-esc="doc.jobcost_total"/></td>
+                                        <td style="white-space: nowrap;"><t t-esc="doc.state"/></td>
+                                    </tr>
+                                   
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td>Costo de Proyecto: </td>
+                                        <td><t t-esc="doc.jobcost_total"/></td>
+                                    </tr>  
+                                </tbody>
+                            </table>
+
+                        </div> 
+
+                        <div  class="text-center" style="border: 1px solid black;background-color: #2E4053 ;color:#FBFCFC;font-size: 18px;">
+                            <strong>Costo Requisiciones de Proyectos</strong>
+                        </div>
+                        <div style="border-bottom: 1px solid black;">
+                            <table class="table no-border">
+                                <tr>
+                                    <td style="text-align:right;">Fecha inicial Reporte: <span t-esc="date_start"/></td> 
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;">Fecha Final Reporte: <span t-esc="date_end"/></td>
+                                </tr>
+                            </table>
+                            <table class="table no-border">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">No. Requisicion</th>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">No. de Proyecto</th>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">Nombre de Proyecto</th>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">Cliente</th>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">Persona que Requisito</th>
+                                        <th style="border: 1px solid  !important; white-space: nowrap;">Costo de Proyecto</th>
+                                        <th style="border: 1px solid  !important;  white-space: nowrap;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="requisition_total" t-value="sum(requisition.mapped('total'))"/>
+                                    <t t-foreach="requisition" t-as="line_requisition">
+                                        <t t-set="total_cost" t-value="sum(line_requisition.req_lines_ids.mapped('subtotal'))"/>
+                                        <tr>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.job_id.number"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.job_id.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.supplier_id.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.responsible.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="total_cost"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_requisition.state"/></td>
+                                            
+                                        </tr>
+                                        
+                                    </t> 
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td>Costo de Requisiciones: </td>
+                                        <td><t t-esc="requisition_total"/></td>
+                                    </tr> 
+                                     
+                                </tbody>
+                            </table>
+
+                        </div>  
+                        
+                        <div  class="text-center" style="border: 1px solid black;background-color: #2E4053 ;color:#FBFCFC;font-size: 18px;">
+                            <strong>Costo Ordenes de Compra por Proyecto</strong>
+                        </div>
+                        <div style="border-bottom: 1px solid black;">
+                            <table class="table no-border ">
+                                <tr>
+                                    <td style="text-align:right;">Fecha inicial Reporte: <span t-esc="date_start"/></td> 
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;">Fecha Final Reporte: <span t-esc="date_end"/></td>
+                                </tr>
+                            </table>
+                            <table class="table no-border" style="width:600px;">
+                                <thead>
+                                    <tr>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Referencia</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">Nombre de Proyecto</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">No. Requisicion</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">Proveedor</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">Fecha de Autorizacion</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">Costo de Proyecto</th>
+                                        <th style="border: 1px solid  !important  ;white-space: nowrap;">Persona que Autoriza</th>
+                                        <th style="border: 1px solid  !important ;white-space: nowrap;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="purchase_total" t-value="sum(purchase.mapped('amount_total'))"/>
+                                    <t t-foreach="purchase" t-as="line_purchase">
+                                    
+                                        <tr>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.project_id.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.req_id"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.partner_id.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.date_order"/></td>
+                                            <td style="white-space: nowrap;" ><t t-esc="line_purchase.amount_total"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.Responsible.name"/></td>
+                                            <td style="white-space: nowrap;"><t t-esc="line_purchase.state"/></td>
+                                            
+                                        </tr>
+                                        
+                                    </t> 
+                                    <tr>
+                                        <td colspan="4"></td>
+                                        <td>Costo de O.C.: </td>
+                                        <td><t t-esc="purchase_total"/></td>
+                                    </tr> 
+                                     
+                                </tbody>
+                            </table>
+
+                        </div> 
+                        <div  class="text-center" style="border: 1px solid black;background-color: #2E4053 ;color:#FBFCFC;font-size: 18px;">
+                            <strong>Resumen de Presupuesto de Proyecto</strong>
+                        </div>
+                        <div style="border-bottom: 1px solid black;">
+                            <table class="table no-border">
+                                <tr>
+                                    <td style="text-align:right;">Fecha inicial Reporte: <span t-esc="date_start"/></td> 
+                                </tr>
+                                <tr>
+                                    <td style="text-align:right;">Fecha Final Reporte: <span t-esc="date_end"/></td>
+                                </tr>
+                            </table>
+
+                            <table class="table no-border" >
+                                <tbody>
+                                   
+                                    <t t-set="purchase_count" t-value="len(purchase)"/>
+                                    <t t-set="requisition_count" t-value="len(requisition)"/>
+                                    <t t-set="project_count" t-value="len(doc)"/>
+                                    <t t-set="utilidad" t-value="doc.jobcost_total - purchase_total"/>
+                                    <tr>
+                                        <td style="border: 1px solid  !important">No de Presupuestos de Proyecto:</td>
+                                        <td style="border: 1px solid  !important"><t t-esc="project_count"/></td>
+                                        <td style="border: 1px solid  !important">Costo de Proyecto:</td>
+                                        <td style="border: 1px solid  !important"><t t-esc="doc.jobcost_total"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid  !important">No. Requisiciones: </td>
+                                        <td style="border: 1px solid  !important"><t t-esc="requisition_count"/></td>
+                                        <td style="border: 1px solid  !important">Costo de Requisiciones:</td>
+                                        <td style="border: 1px solid  !important"><t t-esc="requisition_total"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="border: 1px solid  !important">No. Ordenes de Compra:</td>
+                                        <td style="border: 1px solid  !important"><t t-esc="purchase_count"/></td>
+                                        <td style="border: 1px solid  !important">Costo de O.C.:</td>
+                                        <td style="border: 1px solid  !important"><t t-esc="purchase_total"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2"></td>
+                                        <td style="border: 1px solid  !important">Utilidad: </td>
+                                        <td style="border: 1px solid  !important"><t t-esc="utilidad"/></td>
+                                    </tr>
+                                </tbody>
+                                
+                            </table>
+
+                        </div>
+                        
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

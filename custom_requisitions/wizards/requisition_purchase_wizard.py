@@ -51,7 +51,13 @@ class ReqModelWizard(models.Model):
         string='rec model',
         )
     responsible = fields.Many2one('res.users',string='Responsable')   
-    
+    total = fields.Float("total", compute="_compute_total")
+
+    def _compute_total(self):
+        for rec in self:
+            rec.total= 0
+            rec.total= sum(rec.req_lines_ids.mapped('subtotal'))
+        
     @api.model
     def _prepare_purchase_order(self, line):
         if not self.supplier_id:
@@ -66,6 +72,7 @@ class ReqModelWizard(models.Model):
             "picking_type_id": line.wiz_id.picking_type_id.id,
             "company_id": line.wiz_id.company_id.id,
             "project_id":line.wiz_id.job_id.id,
+            "req_id": self.name,
             "Responsible":line.wiz_id.responsible.id,
             'date_order': datetime.today(),
         }
@@ -199,6 +206,7 @@ class ReqModelWizardLine(models.Model):
     product_uom_id = fields.Many2one(
         comodel_name="uom.uom", string="UoM", required=True
     )
+    subtotal = fields.Float("sub_total", compute="_compute_subtotal")
     req_model_line_id = fields.Many2one(comodel_name='req.model.lines', string='req model line')
     req_labores_line_id = fields.Many2one(comodel_name='req.labores.lines', string='req model line')
     req_subcontrataciones_line_id = fields.Many2one(comodel_name='req.subcontrataciones.lines', string='req model line')
@@ -216,7 +224,9 @@ class ReqModelWizardLine(models.Model):
     job_type_id = fields.Many2one('job.type', string='Tipo de trabajo',related='req_model_line_id.job_type_id' )
     reference = fields.Char(string="Referencia",related='req_model_line_id.reference' )
 
-
+    def _compute_subtotal(self):
+        for rec in self:
+            rec.subtotal = rec.price_unit * rec.qty
     def _compute_planned_quantity(self):
         for rec in self:
             rec. planned_quantity= 0
