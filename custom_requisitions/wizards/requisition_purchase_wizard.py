@@ -128,13 +128,13 @@ class ReqModelWizard(models.Model):
 
         
         date_required = item.date_planned
-
         vals = {
             "name": product.name,
             "order_id": po.id,
             "product_id": product.id,
             "product_uom": product.uom_po_id.id or product.uom_id.id,
             "price_unit": item.price_unit,
+            "price_after":item.price_unit,
             "product_qty": item.qty,
             # "account_analytic_id": item.line_id.analytic_account_id.id,
             "purchase_request_lines": [(4, item.req_model_line_id.id)],
@@ -143,7 +143,8 @@ class ReqModelWizard(models.Model):
             ),
             # "move_dest_ids": [(4, x.id) for x in item.line_id.move_dest_ids],
         }
-        self._execute_purchase_line_onchange(vals)
+        #se comento debido a que ejecuta el metdo de obtencion de precion segun configuracion del producto
+        # self._execute_purchase_line_onchange(vals)
         return vals
 
 
@@ -174,15 +175,7 @@ class ReqModelWizard(models.Model):
                 res.append(purchase.id)
 
         self.state = "finished"
-        # return {
-        #     "domain": [("id", "in", res)],
-        #     "name": _("RFQ"),
-        #     "view_mode": "tree,form",
-        #     "res_model": "purchase.order",
-        #     "view_id": False,
-        #     "context": False,
-        #     "type": "ir.actions.act_window",
-        # }
+       
 
 class ReqModelWizardLine(models.Model):
     _name='requisition.purchase.line.wizard'
