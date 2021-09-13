@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-	<act_window id="action_open_requisitions" name="Requisitions" res_model="req.model" view_type="form" view_mode="tree,form" />
 	<record id="Job_Costing_Form_inherit" model="ir.ui.view">
 		<field name="name">Job.Costing.Form.inherit</field>
 		<field name="model">job.costing</field>
@@ -21,7 +20,7 @@
 				</button>
 			</xpath>
 			<xpath expr="//field[@name='partner_id']" position="after">
-				<field name="Responsible"/>
+				<field name="Responsible" widget="many2many_tags"/>
 			</xpath>
 			<xpath expr="//field[@name='so_number']" position="after">
 				<field name="torres_departamento"/>
@@ -140,7 +139,7 @@
 						<field name="p_order2"  attrs="{'readonly':[('state','=','draft')]}" options="{'no_create': True, 'no_create_edit':True}"/>
 						<field name="employee_id" />
 						<field name="date" />
-						<field name="Responsible" />
+						<field name="Responsible" widget="many2many_tags" />
 						<field name="torres_departamento" readonly="1"/>
 					</group>
 					<notebook>
@@ -260,6 +259,35 @@
 			</tree>
 		</field>
 	</record>
+	<record id="requisitions_search" model="ir.ui.view">
+		<field name="name">requisitions_search</field>
+		<field name="model">req.model</field>
+		<field name="arch" type="xml">
+			<search string="Search Job Coasting">
+				<field name="p_order2"/>
+				<field name="employee_id"/>
+				<field name="Responsible"/>
+				<field name="date"/>
+				<field name="state"/>
+				
+				<filter string="Mis requisiciones" name="my_requisitions" domain="[('Responsible', '=', uid)]"/>
+				<group expand="0" string="Group By">
+					<filter string="Responsible" name="Responsible" context="{'group_by':'Responsible'}"/>
+					<filter string="Project" name="p_order2" context="{'group_by':'p_order2'}"/>
+					<filter string="Date" name="date" context="{'group_by':'date'}"/>
+					<filter string="State" name="state" context="{'group_by':'state'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+	<record model="ir.actions.act_window" id="action_open_requisitions">
+        <field name="name">Requisitions</field>
+        <field name="res_model">req.model</field>
+        <field name="view_type">form</field>
+		<field name="domain">['|', ('Responsible','=',uid), ("admin_user", "=", uid)]</field>
+		<field name="context"> {"search_default_my_requisitions": 1} </field>
+        <field name="view_mode">tree,form</field>
+    </record>
 	<menuitem id="menu_job_cost_project_requisition_menu" name="Requisicion" parent="odoo_job_costing_management.menu_job_managmt"  sequence="2"/>
 	<menuitem id="menu_job_cost_project_requisition" name="Requisicion" parent="custom_requisitions.menu_job_cost_project_requisition_menu" action="action_open_requisitions" sequence="1" />
     
@@ -268,6 +296,7 @@
         <field name="res_model">job.costing</field>
         <field name="domain">['|', ('Responsible','=',uid), ("admin_user", "=", uid)]</field>
         <field name="view_type">form</field>
+		<field name="context"> {"search_default_my_project": 1} </field>
         <field name="view_mode">tree,form</field>
     </record>
 

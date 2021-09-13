@@ -16,7 +16,6 @@ class RequisitionReportWizard(models.TransientModel):
 
 
     def get_report(self):
-        print("#####################")
         data = {
             'ids': self.ids,
             'model': self._name,

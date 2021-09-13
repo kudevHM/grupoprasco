@@ -11,7 +11,13 @@ class JobCostingInherit(models.Model):
     _inherit = 'job.costing'
     admin_user = fields.Integer('Admin User', default=2)
     current_user = fields.Many2one('res.users','Current User', default=lambda self: self.env.user)
-    Responsible = fields.Many2one('res.users','Responsable', required=True)
+    Responsible = fields.Many2one('res.users','esponsable', )
+    # Responsible = fields.Many2many(comodel_name='res.users', relation='responsible_job_res_partner_rel',  column1='job_responsible_ids',column2='Responsible_ids',string='Responsable', required=True)
+   
+    Responsible = fields.Many2many(
+        'res.users',
+        string='Responsables',
+    )
     req_id = fields.One2many(comodel_name='req.model', inverse_name="p_order2")
     has_req = fields.Boolean(string='tiene requisición?')
     labour_discount = fields.Float(string='Descuento por Labores', readonly=True, compute='_compute_dscto_labour', store=True)
@@ -79,7 +85,6 @@ class JobCostingInherit(models.Model):
         active_id = self._context.get('active_id', False)
         job_id = self.env['job.costing'].browse(active_id)
        
-        print("##############ingreso al report")
         view_id = self.env.ref('custom_requisitions.requisition_report_wizard_form').id
       
         return {
@@ -180,12 +185,11 @@ class JobCostingInherit(models.Model):
     @api.multi
     def action_confirm(self):
         req_model = self.env['req.model']
-        
         req_model.sudo().create(
             {   "employee_id":self.partner_id.id,
                 "p_order":self.number,
                 "p_order2":self.id,
-                "Responsible": self.Responsible.id,
+                "Responsible": [(6, 0,self.Responsible.ids)],
                 "torres_departamento":self.torres_departamento,
                 "state": 'draft'
             }

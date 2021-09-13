@@ -8,7 +8,7 @@
             <form create="false" >
                 <header>
                     <button name="validate_vobo" string="VoBo" type="object" states="vobo" class="oe_highlight" />
-                    <button name="create_purchase_order" string="Crear Orden de compra" type="object" states="valid" class="oe_highlight" groups="custom_requisitions.requisitions_manager" />
+                    <button name="create_purchase_order" string="Solicitar Orden de compra" type="object" states="valid" class="oe_highlight" groups="custom_requisitions.requisitions_manager" />
                     <field name="state" widget="statusbar" statusbar_visible="draft,valid,finished,cancel" />                
                 </header>
                 <sheet>
@@ -25,7 +25,7 @@
                             <field name="supplier_id" readonly="1"/>    
                         </group>
                         <group>
-                            <field name="responsible" readonly="1"/> 
+                            <field name="responsible"  widget="many2many_tags" readonly="1"/> 
                             <field name="picking_type_id" readonly="1"/>     
                         </group>
 
@@ -79,6 +79,33 @@
 			</tree>
 		</field>
 	</record>
-    <act_window id="action_requisition_purchase_wizard" name="Requisicion" view_id="custom_requisitions_requisition_purchase_tree_view"  res_model="requisition.purchase.wizard" view_type="form" view_mode="tree,form" />
+    <record id="custom_requisitions_requisition_purchase_search" model="ir.ui.view">
+		<field name="name">custom_requisitions_requisition_purchase_search</field>
+		<field name="model">requisition.purchase.wizard</field>
+		<field name="arch" type="xml">
+			<search string="Search requisition line">
+				<field name="job_id"/>
+				<field name="supplier_id"/>
+				<field name="responsible"/>
+				<field name="state"/>
+				
+				<filter string="Mis lineas de requisiciones" name="my_line_requisitions" domain="[('responsible', '=', uid)]"/>
+				<group expand="0" string="Group By">
+					<filter string="Responsible" name="responsible" context="{'group_by':'responsible'}"/>
+					<filter string="Project" name="job_id" context="{'group_by':'job_id'}"/>
+					<filter string="State" name="state" context="{'group_by':'state'}"/>
+				</group>
+			</search>
+		</field>
+	</record>
+    <record model="ir.actions.act_window" id="action_requisition_purchase_wizard">
+        <field name="name">Requisicion</field>
+        <field name="res_model">requisition.purchase.wizard</field>
+        <field name="view_type">form</field>
+		<field name="domain">['|', ('responsible','=',uid), ("admin_user", "=", uid)]</field>
+		<field name="context"> {"search_default_my_line_requisitions": 1} </field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    
     <menuitem id="menu_job_cost_project_requisition_line" name="Lineas de Requisicion " parent="custom_requisitions.menu_job_cost_project_requisition_menu" action="action_requisition_purchase_wizard" sequence="2" />
 </odoo>

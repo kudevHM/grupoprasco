@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="job_costing_search_inherit" model="ir.ui.view">
+        <field name="name">job_costing_custom_requisitions</field>
+        <field name="model">job.costing</field>
+        <field name="inherit_id" ref="odoo_job_costing_management.job_costing_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="after">
+                <field name="Responsible"/>
+            </xpath>
+            <xpath expr="//filter[@name='confirm_state']" position="before">
+                <separator/>
+                    <filter string="Mis presupuesto de proyecto" name="my_project" domain="[('Responsible', '=', uid)]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

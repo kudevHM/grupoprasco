@@ -25,6 +25,7 @@ class ReqModelWizard(models.Model):
         required=True,
         copy=True,
     )
+    admin_user = fields.Integer('Admin User', default=2)
     name = fields.Char(string="Nombre")
     state = fields.Selection([('draft', 'Borrador'),('vobo', 'Vobo'),('valid','Validar'),('finished', 'Terminado'),('cancel', 'Cancelado')],default="draft")
     picking_type_id = fields.Many2one(
@@ -50,7 +51,10 @@ class ReqModelWizard(models.Model):
         'req.model',
         string='rec model',
         )
-    responsible = fields.Many2one('res.users',string='Responsable')   
+    responsible = fields.Many2many(
+        'res.users',
+        string='Responsables',
+    )   
     total = fields.Float("total", compute="_compute_total")
 
     def _compute_total(self):
@@ -73,7 +77,7 @@ class ReqModelWizard(models.Model):
             "company_id": line.wiz_id.company_id.id,
             "project_id":line.wiz_id.job_id.id,
             "req_id": self.name,
-            "Responsible":line.wiz_id.responsible.id,
+            "Responsible":[(6, 0,line.wiz_id.responsible.ids)],
             'date_order': datetime.today(),
         }
         return data
@@ -87,7 +91,10 @@ class ReqModelWizard(models.Model):
                 if line.qty < 0.0:
                     raise UserError(_("Ingrese una cantidad positiva."))
                 if line.qty > line.available_qty :
-                    raise UserError(_("La cantidad a retirar debe ser menor o igual a la cantidad disponible.")) 
+                    raise UserError(_("La cantidad a retirar debe ser menor o igual a la cantidad disponible."))
+                if not line.pr_active :
+                    line.unlink()
+
             self.state = "vobo"
         return res
 
@@ -104,7 +111,7 @@ class ReqModelWizard(models.Model):
 
     @api.model
     def _get_purchase_line_onchange_fields(self):
-        return ["product_uom", "price_unit", "name", "taxes_id"]
+        return ["product_uom", "name", "taxes_id"]
 
     @api.model
     def _execute_purchase_line_onchange(self, vals):
@@ -144,7 +151,7 @@ class ReqModelWizard(models.Model):
             # "move_dest_ids": [(4, x.id) for x in item.line_id.move_dest_ids],
         }
         #se comento debido a que ejecuta el metdo de obtencion de precion segun configuracion del producto
-        # self._execute_purchase_line_onchange(vals)
+        self._execute_purchase_line_onchange(vals)
         return vals
 
 

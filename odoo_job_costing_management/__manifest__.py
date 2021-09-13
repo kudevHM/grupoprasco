@@ -208,7 +208,7 @@ Create Project/Contract -> Create Job Orders -> Create Multiple Job Cost Sheets 
 
     'data':[
            'security/construction_security.xml',
-            #'security/ir.model.access.csv',
+            'security/ir.model.access.csv',
             'data/jobcost_sequence.xml',
             'wizard/project_user_subtask_view.xml',
             'wizard/purchase_order_view.xml',

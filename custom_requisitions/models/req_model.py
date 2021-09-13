@@ -26,8 +26,11 @@ class ReqModel(models.Model):
     employee_id = fields.Many2one(
         'res.partner', string='Empleado', required=True)
     date = fields.Date(string='Fecha de Creación')
-    Responsible = fields.Many2one(
-        'res.users', string='Responsable', required=True)
+    Responsible = fields.Many2many(
+        'res.users',
+        string='Responsables',
+        required=True
+    )    
     req_lines_ids = fields.One2many(
         comodel_name='req.model.lines', inverse_name='req_id', string='Materiales')
     req_labores_ids = fields.One2many(
@@ -208,7 +211,7 @@ class ReqModel(models.Model):
             'supplier_id':self.employee_id.id,
             'job_id':self.p_order2.id,
             'rec_model':self.id,
-            'responsible':self.Responsible.id,
+            'responsible':[(6, 0,self.Responsible.ids)],
             'name':name
         })
 

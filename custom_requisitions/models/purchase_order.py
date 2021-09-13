@@ -20,7 +20,10 @@ class PurchaseOrderInherit(models.Model):
     project_id = fields.Many2one('job.costing', string='Proyecto')
     #orden de trabajo falta
     client_id = fields.Many2one("res.partner", "Cliente")
-    Responsible = fields.Many2one('res.users','Responsable', )
+    Responsible = fields.Many2many(
+        'res.users',
+        string='Responsables',
+    ) 
     project_name = fields.Char(string='Nombre de Proyecto',compute=compute_project_name)
 
     

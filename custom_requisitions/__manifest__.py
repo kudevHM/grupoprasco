@@ -27,7 +27,6 @@
         'security/ir.model.access.csv',
         'security/groups.xml',
         'views/wizard.xml',
-        'wizards/requisition_purchase_wizard.xml',
         'views/budget_wizard.xml',
         'data/categorias.xml',
         'data/req_model.xml',
@@ -35,11 +34,14 @@
         'views/menu_items.xml',
       #  "views/product_views.xml",
         "views/requisition_view.xml",
+        'wizards/requisition_purchase_wizard.xml',
         "wizards/devolver.xml",
         "wizards/report_requisition.xml",
         "report/report.xml",
         "report/report_custom_requisition.xml",
         "views/purchase_order.xml",
+        "views/job_costing_view.xml",
+        
 
         ],
     # only loaded in demonstration mode
