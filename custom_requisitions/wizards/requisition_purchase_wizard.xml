@@ -32,7 +32,7 @@
                     </group> 
                     <notebook>
                         <page string="Materiales">
-                            <field name="req_lines_ids" nolabel="1" attrs="{'readonly':[('state', '=', 'finished')]}">
+                            <field name="req_lines_ids" widget="search_requisition"  nolabel="1" attrs="{'readonly':[('state', '=', 'finished')]}">
                                 <tree editable="bottom" create="false" delete="false" decoration-success="pr_active==True">
                                     <field name="product_id" readonly="1" />
                                     <field name="name" readonly="1" />
